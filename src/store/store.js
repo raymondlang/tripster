@@ -1,15 +1,20 @@
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-// import logger from 'redux-logger';
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import commentReducer from "@/reducers/commentSlice.js";
+// import session from "./session_api_reducer";
+// import errors from "./errors_reducer";
+// import trips from "./trip_reducer";
+// import items from "./item_reducer";
+// import flightItems from "./flight_item_reducer";
+// import foodItems from "./food_item_reducer";
+// import lodgingItems from "./lodging_item_reducer";
+// import users from "./users_reducer";
+// import thunk from "redux-thunk";
 
-import rootReducer from "../reducers/root_reducer";
+const store = configureStore({
+  reducer: { comment: commentReducer },
+  //   //   middleware: [...getDefaultMiddleware(), thunk],
+  //   //   devTools: process.env.NODE_ENV !== "production",
+  //   preloadedState: {},
+});
 
-const configureStore = (preloadedState = {}) =>
-  createStore(
-    rootReducer,
-    preloadedState,
-    applyMiddleware(thunk)
-    // applyMiddleware(thunk, logger) //Removed for production
-  );
-
-export default configureStore;
+export default store;
