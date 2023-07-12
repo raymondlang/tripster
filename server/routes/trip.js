@@ -183,3 +183,34 @@ router.delete(
       });
   }
 );
+
+// Add a comment to a trip.
+router.post(
+  "/:trip_id/comment",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Trip.findById(req.params.trip_id).then((trip) => {
+      // Check that the current user is part of this trip.
+      if (trip.users.includes(req.user.id)) {
+        const { errors, isValid } = ValidateCommentInput(req.body);
+
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
+
+        const newComment = new Comment({
+          author: { _id: req.user.id, username: req.user.username },
+          trip: trip.id,
+          comment: req.body.comment,
+        });
+
+        newComment.save().then((comment) => {
+          trip.comments.push(comment.id);
+          trip.save().then(() => res.json(comment));
+        });
+      } else {
+        return res.status(401).json("Not the owner");
+      }
+    });
+  }
+);
