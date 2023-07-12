@@ -1,36 +1,49 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Route, Redirect, withRouter } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { Route, Redirect, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 
-// Passed in from parent component or from mapStateToProps
-const Auth = ({ component: Component, path, loggedIn, exact }) => (
-  <Route path={path} exact={exact} render={(props) => (
-    !loggedIn ? (
-      <Component {...props} />
-    ) : (
-        <Redirect to='/profile' /> //redirect to profile if user is authenticated
-      )
-  )} />
-);
+const AuthRoute = ({ component: Component, ...rest }) => {
+  const loggedIn = useSelector((state) => state.session.isAuthenticated);
+  const location = useLocation();
 
-const Protected = ({ component: Component, loggedIn, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      loggedIn ? (
-        <Component {...props} />
-      ) : (
-          <Redirect to='/login' />
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        !loggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/profile",
+              state: { from: location },
+            }}
+          />
         )
-    }
-  />
-);
+      }
+    />
+  );
+};
 
-// Use the isAuthenitcated slice of state to determine whether a user is logged in
+AuthRoute.propTypes = {
+  component: PropTypes.elementType.isRequired,
+};
 
-const mapStateToProps = state => (
-  { loggedIn: state.session.isAuthenticated }
-);
+const ProtectedRoute = ({ component: Component, ...rest }) => {
+  const loggedIn = useSelector((state) => state.session.isAuthenticated);
 
-export const AuthRoute = withRouter(connect(mapStateToProps)(Auth));
-export const ProtectedRoute = withRouter(connect(mapStateToProps)(Protected));
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        loggedIn ? <Component {...props} /> : <Redirect to="/login" />
+      }
+    />
+  );
+};
+
+ProtectedRoute.propTypes = {
+  component: PropTypes.elementType.isRequired,
+};
+
+export { AuthRoute, ProtectedRoute };

@@ -8,9 +8,7 @@ const usersSlice = createSlice({
     receiveUser: (state, action) => {
       return action.payload.user.data;
     },
-    removeUser: (state, action) => {
-      return {};
-    },
+    removeUser: () => ({}),
     receiveErrors: (state, action) => {
       state.errors = action.payload.errors;
     },

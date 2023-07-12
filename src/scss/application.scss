@@ -1,0 +1,22 @@
+@import "./reset.scss";
+@import "./colors.scss";
+// @import "./fonts.scss";
+// General styles go on main.scss
+// Things like how <h1> tags should look on the entire site.
+@import "main.scss";
+
+// NOTE: Remember to use the colors from colors.scss
+// Import your files after this line.
+// @import "/01_splash/splash.scss";
+// @import "/02_nav/nav.scss";
+// @import "/03_auth/login.scss";
+// @import "/03_auth/signup.scss";
+// @import "/04_user_dash/user_trips.scss";
+// @import "/05_create_trip/new_trip.scss";
+// @import "/06_edit_trip/edit_trip.scss";
+// @import "/07_trip_dash/trip_page.scss";
+// @import "/07_trip_dash/trip_users_list.scss";
+// @import "/07_trip_dash/comments.scss";
+// @import "/07_trip_dash/items.scss";
+// @import "/07_trip_dash/maps.scss";
+// @import "/08_footer/footer.scss";
