@@ -85,3 +85,31 @@ router.get(
       });
   }
 );
+
+// Create a new trip.
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = ValidateTripInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    const newTrip = new Trip({
+      users: [req.user],
+      destination: req.body.destination,
+      tripName: req.body.tripName,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
+    });
+
+    newTrip
+      .save()
+      .then((trip) => res.json(trip))
+      .catch((err) => {
+        return res
+          .status(404)
+          .json({ notripfound: "There was a problem creating the route." });
+      });
+  }
+);
