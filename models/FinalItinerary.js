@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import ItineraryItemSchema from "ItineraryItem.js";
 
 const { Schema } = mongoose;
 
