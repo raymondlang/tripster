@@ -1,20 +1,23 @@
 import axios from "axios";
 
 export const fetchAllItineraryItems = () => {
-  return axios.get(`/api/itineraryitems/`);
+  return axios.get(`/api/itineraryitems/`).then((response) => response.data);
 };
+
 export const fetchItineraryItem = (itemId) => {
-  return axios.get(`/api/itineraryitems/${itemId}`);
+  return axios
+    .get(`/api/itineraryitems/${itemId}`)
+    .then((response) => response.data);
 };
 
 export const createItineraryItem = (data) => {
-  return axios.post(`/api/trips/${data.tripId}/itineraryItem`, data);
+  return axios
+    .post(`/api/trips/${data.tripId}/itineraryItem`, data)
+    .then((response) => response.data);
 };
 
-// export const updateItineraryItem = (data) => {
-//     return axios.patch(`/api/itineraryitems/${data.id}`, data);
-// } //unsure of data.id
-
 export const deleteItineraryItem = (itemId) => {
-  return axios.delete(`/api/trips/itineraryItems/${itemId}`);
+  return axios
+    .delete(`/api/trips/itineraryItems/${itemId}`)
+    .then((response) => response.data);
 };
