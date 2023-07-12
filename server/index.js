@@ -5,8 +5,8 @@ import bodyParser from "body-parser";
 // import passport from "passport";
 import path from "path";
 import dotenv from "dotenv";
-import user from "./routes/user.js";
-import trip from "./routes/trip.js";
+import user from "./routes/users.js";
+import trip from "./routes/trips.js";
 
 dotenv.config();
 if (process.env.NODE_ENV === "production") {
