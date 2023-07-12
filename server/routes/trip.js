@@ -113,3 +113,73 @@ router.post(
       });
   }
 );
+
+// Update existing trip.
+router.patch(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = ValidateTripInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    Trip.findByIdAndUpdate(req.body._id, req.body, { new: true, upsert: true })
+      // .then(Trip.findById(req.params.id)
+      //     .populate({
+      //         path: "users",
+      //         model: "User",
+      //         select: ["username", "_id"]
+      //     })
+      //     .populate({
+      //         path: "comments",
+      //         model: "Comment",
+      //         select: ["author", "comment", "date"]
+      //     })
+      //     .populate({
+      //         path: "itineraryItems",
+      //         model: "ItineraryItem"
+      //     })
+      //     .populate({
+      //         path: "flightItineraryItems",
+      //         model: "FlightItineraryItem"
+      //     })
+      //     .populate({
+      //         path: "lodgingItineraryItems",
+      //         model: "LodgingItineraryItem"
+      //     })
+      //     .populate({
+      //         path: "foodItineraryItems",
+      //         model: "FoodItineraryItem"
+      //     }))
+      .then((trip) => res.json({ [trip._id]: trip }))
+      // .then(trip => res.json({}))
+      .catch((err) => {
+        return res
+          .status(404)
+          .json({ notripfound: "There was a problem updating the route." });
+      });
+  }
+);
+
+// Delete a specific trip.
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Trip.findById(req.params.id)
+      .then((trip) => {
+        if (trip.users.includes(req.user.id)) {
+          trip.remove(() => res.json(trip));
+        } else {
+          // This user isn't authorized to view this trip.
+          return res
+            .status(401)
+            .json({ unauthorized: "You are not authorized" });
+        }
+      })
+      .catch((err) => {
+        return res.status(404).json({ notripfound: "This trip doesn't exist" });
+      });
+  }
+);
