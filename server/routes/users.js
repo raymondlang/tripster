@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 
-import keys from "../../config/keys";
+import keys from "../config/keys";
 import User from "../../models/User";
 
 import validateRegisterInput from "../validation/register";
