@@ -5,7 +5,8 @@ import bodyParser from "body-parser";
 // import passport from "passport";
 import path from "path";
 import dotenv from "dotenv";
-// import users from "./routes/api/users";
+import user from "./routes/user.js";
+import trip from "./routes/trip.js";
 
 dotenv.config();
 if (process.env.NODE_ENV === "production") {
@@ -29,9 +30,9 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// // routes
-// app.use("/api/users", users);
-// app.use("/api/trips", trips);
+// routes
+app.use("/api/users", user);
+app.use("/api/trips", trip);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
