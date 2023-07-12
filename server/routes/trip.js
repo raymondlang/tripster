@@ -270,3 +270,30 @@ router.post(
     });
   }
 );
+
+// Delete a itineraryItem, and remove it from a trip.
+router.delete(
+  "/itineraryItems/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    ItineraryItem.findById(req.params.id)
+      .populate({
+        // Populate the trip to remove the itinerary item from it before deleteing it.
+        path: "trip",
+        model: "Trip",
+        select: ["itineraryItems", "users"],
+      })
+      .then((itineraryItem) => {
+        // Check that the current user is part of the trip that is parent if this itinerary item.
+        if (itineraryItem.trip.users.includes(req.user.id)) {
+          const trip = itineraryItem.trip;
+          trip.itineraryItems.pull({ _id: itineraryItem.id });
+          trip.save().then(() => {
+            itineraryItem.remove().then(() => res.json(itineraryItem));
+          });
+        } else {
+          return res.status(401).json("Not the owner");
+        }
+      });
+  }
+);
