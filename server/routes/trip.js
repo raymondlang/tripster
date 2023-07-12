@@ -237,3 +237,36 @@ router.delete(
       });
   }
 );
+
+// Add a itineraryItem to a trip.
+router.post(
+  "/:trip_id/itineraryItem",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Trip.findById(req.params.trip_id).then((trip) => {
+      // Check that the current user is part of this trip.
+      if (trip.users.includes(req.user.id)) {
+        const { errors, isValid } = validateItineraryItemInput(req.body);
+
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
+
+        const newitineraryItem = new ItineraryItem({
+          trip: trip.id,
+          itemName: req.body.itemName,
+          category: req.body.category,
+          address: req.body.address,
+          description: req.body.description,
+        });
+
+        newitineraryItem.save().then((ItineraryItem) => {
+          trip.itineraryItems.push(ItineraryItem.id);
+          trip.save().then(() => res.json(ItineraryItem));
+        });
+      } else {
+        return res.status(401).json("Not the owner");
+      }
+    });
+  }
+);
