@@ -214,3 +214,26 @@ router.post(
     });
   }
 );
+
+// Delete a comment, and remove it from a trip.
+router.delete(
+  "/comments/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Comment.findById(req.params.id)
+      .populate("author._id")
+      .then((comment) => {
+        // Check that the current user is the owner of this comment.
+        if (comment.author._id.id === req.user.id) {
+          Trip.findById(comment.trip).then((trip) => {
+            trip.comments.pull({ _id: comment.id });
+            trip.save().then(() => {
+              comment.remove().then(() => res.json(comment));
+            });
+          });
+        } else {
+          return res.status(401).json("Not the owner");
+        }
+      });
+  }
+);
