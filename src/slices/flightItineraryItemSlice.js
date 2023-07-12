@@ -28,7 +28,7 @@ export const createItineraryItem = createAsyncThunk(
 export const deleteFlightItem = createAsyncThunk(
   "flightItineraryItems/delete",
   async (itemId) => {
-    const response = await ItemAPIUtil.deleteItineraryItem(itemId);
+    await ItemAPIUtil.deleteItineraryItem(itemId);
     return itemId;
   }
 );
