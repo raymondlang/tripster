@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AuthRoute } from "./util/route_util";
-import "./App.css";
+import "./App.scss";
 import NavBar from "./components/nav/navbar";
 import { Routes, Route } from "react-router-dom";
 import Splash from "./components/splash/splash_page";
