@@ -7,8 +7,8 @@
 
 // NOTE: Remember to use the colors from colors.scss
 // Import your files after this line.
-// @import "/01_splash/splash.scss";
-// @import "/02_nav/nav.scss";
+@import "./01_splash/splash.scss";
+@import "/02_nav/nav.scss";
 // @import "/03_auth/login.scss";
 // @import "/03_auth/signup.scss";
 // @import "/04_user_dash/user_trips.scss";

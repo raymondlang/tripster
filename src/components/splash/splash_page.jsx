@@ -6,11 +6,11 @@ const Splash = () => {
       <div className="splash-subcontainer">
         <div className="splash-header-container">
           <img
-            alt="backpackr-logo"
+            alt="tripster-logo"
             className="splash-header-logo"
             src="https://i.ibb.co/HdM0KxR/logo.png"
           />
-          <h1 className="splash-header-text">Backpackr</h1>
+          <h1 className="splash-header-text">Tripster</h1>
         </div>
 
         <div className="splash-body-container">

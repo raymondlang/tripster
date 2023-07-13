@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { signup, login, receiveErrors } from "@/slices/sessionSlice";
 
@@ -8,16 +8,16 @@ const SignupForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const errors = useSelector((state) => state.errors.session);
-  const signedIn = useSelector((state) => state.session.isSignedIn);
+  //   const errors = useSelector((state) => state.errors.session);
+  const session = useSelector((state) => state.session);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(() => {
-    if (signedIn) {
+    if (session.isSignedIn) {
       history.push("/login");
     }
-  }, [signedIn, history]);
+  }, [session, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,23 +35,23 @@ const SignupForm = () => {
     dispatch(login({ email: "demo@gmail.com", password: "password" }));
   };
 
-  const renderErrors = () => {
-    return (
-      <ul>
-        {Object.keys(errors).map((error, idx) => (
-          <li className="signup-form-errors-element" key={`error-${idx}`}>
-            {errors[error]}
-          </li>
-        ))}
-      </ul>
-    );
-  };
+  //   const renderErrors = () => {
+  //     return (
+  //       <ul>
+  //         {Object.keys(errors).map((error, idx) => (
+  //           <li className="signup-form-errors-element" key={`error-${idx}`}>
+  //             {errors[error]}
+  //           </li>
+  //         ))}
+  //       </ul>
+  //     );
+  //   };
 
   return (
     <div className="signup-form-container">
       <form onSubmit={handleSubmit}>
         <div className="signup-form-subcontainer">
-          <h1 className="signup-form-header">Welcome to Backpackr</h1>
+          <h1 className="signup-form-header">Welcome to Tripster</h1>
           <div className="signup-form-input-container">
             <input
               className="signup-form-input-element"
@@ -96,7 +96,7 @@ const SignupForm = () => {
             <br />
           </div>
 
-          <div className="signup-form-errors">{renderErrors()}</div>
+          {/* <div className="signup-form-errors">{renderErrors()}</div> */}
 
           <button className="signup-form-submit-btn" type="submit">
             Sign Up

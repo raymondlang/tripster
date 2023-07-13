@@ -1,0 +1,83 @@
+.footer-container {
+  // Guide to make it stick to the bottom:
+  // https://css-tricks.com/couple-takes-sticky-footer/
+
+  display: flex;
+  justify-content: center;
+
+  padding: 75px 0px;
+
+  font-family: "Helvetica Neue", sans-serif;
+  color: $light;
+  font-size: 15px;
+  // background-color: $main-color;
+  background-color: $dark;
+  width: 100%;
+
+  footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    max-width: 1000px;
+    width: 100%;
+  }
+}
+
+footer > ul {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+
+  & > li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+
+    & > p {
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    & > ul > li {
+      margin-bottom: 7px;
+    }
+
+    &:first-child {
+      border-right: solid $light 1px;
+      padding-right: 20px;
+    }
+  }
+}
+
+#footer-copyright {
+  margin-top: 55px;
+  font-weight: bold;
+}
+
+.footer-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+  padding: 0;
+}
+
+.footer-link-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-link-item a {
+  margin-top: 0.5rem;
+  text-align: center;
+}

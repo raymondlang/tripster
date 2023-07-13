@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Route, Redirect, useLocation } from "react-router-dom";
+import { Route, Navigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const AuthRoute = ({ component: Component, ...rest }) => {
@@ -13,7 +13,7 @@ const AuthRoute = ({ component: Component, ...rest }) => {
         !loggedIn ? (
           <Component {...props} />
         ) : (
-          <Redirect
+          <Navigate
             to={{
               pathname: "/profile",
               state: { from: location },
@@ -36,7 +36,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        loggedIn ? <Component {...props} /> : <Redirect to="/login" />
+        loggedIn ? <Component {...props} /> : <Navigate to="/login" />
       }
     />
   );

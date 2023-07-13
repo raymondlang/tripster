@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { login, receiveErrors } from "../../actions/session_actions";
+import { login } from "../../slices/sessionSlice";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -88,4 +88,4 @@ const LoginForm = () => {
   );
 };
 
-export default withRouter(LoginForm);
+export default LoginForm;
