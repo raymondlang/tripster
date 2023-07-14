@@ -1,14 +1,17 @@
 import express from "express";
-const app = express();
 import mongoose from "mongoose";
+import cors from "cors";
 import bodyParser from "body-parser";
 import passport from "passport";
 import path from "path";
 import dotenv from "dotenv";
-import user from "./routes/users.js";
-import trip from "./routes/trips.js";
+import userRoutes from "./routes/users.js";
+import tripRoutes from "./routes/trips.js";
 
 dotenv.config();
+const app = express();
+app.use(cors());
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("frontend/build"));
   app.get("/", (res) => {
@@ -24,15 +27,15 @@ mongoose
   .catch((err) => console.log(err));
 
 // middleware
-// app.use(passport.initialize());
+app.use(passport.initialize());
 // require("./config/passport")(passport);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // routes
-app.use("/api/users", user);
-app.use("/api/trips", trip);
+app.use("/api/users", userRoutes);
+app.use("/api/trips", tripRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));

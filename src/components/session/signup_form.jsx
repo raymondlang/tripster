@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { signup, login, receiveErrors } from "@/slices/sessionSlice";
+import { signup, login } from "../../slices/sessionSlice";
 
 const SignupForm = () => {
   const [email, setEmail] = useState("");
@@ -27,6 +27,7 @@ const SignupForm = () => {
       password,
       password2,
     };
+    console.log(user);
     dispatch(signup(user, history));
   };
 

@@ -12,11 +12,11 @@ import FlightItineraryItem from "../../models/FlightItineraryItem.js";
 import LodgingItineraryItem from "../../models/LodgingItineraryItem.js";
 import FoodItineraryItem from "../../models/FoodItineraryItem.js";
 
-// Validation
-import ValidateTripInput from "../../validation/trip.js";
-import ValidateCommentInput from "../../validation/comment.js";
-import validateItineraryItemInput from "../../validation/itineraryItem.js";
-import validText from "../../validation/valid-text.js";
+// Validation;
+import validateTripInput from "../validation/trip.js";
+import ValidateCommentInput from "../validation/comment.js";
+import validateItineraryItemInput from "../validation/intineraryItem.js";
+import validText from "../validation/validText.js";
 
 const router = express.Router();
 dotenv.config();
