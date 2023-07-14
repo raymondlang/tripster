@@ -5,8 +5,6 @@ import { deleteItem } from "../../slices/intineraryItemSlice";
 import { deleteFlightItem } from "../../slices/flightItineraryItemSlice";
 import { deleteLodgingItem } from "../../slices/lodgingItineraryItemSlice";
 import { deleteFoodItem } from "../../slices/foodItineraryItemSlice";
-import UsersListContainer from "../users_list/users_list_container";
-import CommentsContainer from "../comments/comments_container";
 import ItineraryContainer from "../itinerary_items/itinerary";
 import FlightItineraryItem from "../itinerary_items/flight/flight_itinerary_item";
 import LodgingItineraryItem from "../itinerary_items/lodging/lodging_itinerary_item";
@@ -14,6 +12,8 @@ import ItineraryItem from "../itinerary_items/other/itinerary_item";
 import FoodItineraryItem from "../itinerary_items/food/food_itinerary_item";
 import Map from "../map/map";
 import { useParams } from "react-router-dom";
+import UsersList from "../users_list/UsersList";
+import Comments from "../comments/comments";
 
 const TripPage = () => {
   const dispatch = useDispatch();
@@ -82,18 +82,11 @@ const TripPage = () => {
       <div className="trip-page-subcontainer">
         <div className="trip-sidebar-container">
           <div className="trip-sidebar-container-elements">
-            <UsersListContainer
-              users={trip.users}
-              newusers={users}
-              tripId={tripId}
-            />
+            <UsersList users={trip.users} newusers={users} tripId={tripId} />
           </div>
         </div>
         <div className="trip-chat-container">
-          <CommentsContainer
-            tripId={trip._id}
-            comments={Object.values(comments)}
-          />
+          <Comments tripId={trip._id} comments={Object.values(comments)} />
         </div>
         <div className="trip-items-container">
           <header className="trip-items-header">
