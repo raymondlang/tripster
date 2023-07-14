@@ -1,5 +1,5 @@
 import React from "react";
-import FoodItineraryItemDetails from "./food_itinerary_item_details";
+import FoodItineraryItemDetails from "./FoodItineraryItemDetails";
 import CreateFoodItineraryItem from "./CreateFoodItineraryItem";
 
 const FoodItineraryItem = ({ foodItineraryItems, deleteFoodItem }) => {

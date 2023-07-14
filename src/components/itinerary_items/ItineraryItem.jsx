@@ -1,4 +1,4 @@
-import ItineraryItemDetails from "./itinerary_item_details";
+import ItineraryItemDetails from "./ItineraryItemDetails";
 import CreateItineraryItem from "./CreateItineraryItem";
 
 const ItineraryItem = (props) => {

@@ -1,21 +1,25 @@
 import express from "express";
-const router = express.Router();
 import mongoose from "mongoose";
 import passport from "passport";
+import dotenv from "dotenv";
 
-import Trip from "../../models/Trip";
-import Comment from "../../models/Comment";
-import User from "../../models/User";
-import ItineraryItem from "../../models/ItineraryItem";
-import FlightItineraryItem from "../../models/FlightItineraryItem";
-import LodgingItineraryItem from "../../models/LodgingItineraryItem";
-import FoodItineraryItem from "../../models/FoodItineraryItem";
+// Models
+import Trip from "../../models/Trip.js";
+import Comment from "../../models/Comment.js";
+import User from "../../models/User.js";
+import ItineraryItem from "../../models/ItineraryItem.js";
+import FlightItineraryItem from "../../models/FlightItineraryItem.js";
+import LodgingItineraryItem from "../../models/LodgingItineraryItem.js";
+import FoodItineraryItem from "../../models/FoodItineraryItem.js";
 
-import ValidateTripInput from "../../validation/trip";
-import ValidateCommentInput from "../../validation/comment";
-import validateItineraryItemInput from "../../validation/itineraryItem";
-import validText from "../../validation/valid-text";
+// Validation
+import ValidateTripInput from "../../validation/trip.js";
+import ValidateCommentInput from "../../validation/comment.js";
+import validateItineraryItemInput from "../../validation/itineraryItem.js";
+import validText from "../../validation/valid-text.js";
 
+const router = express.Router();
+dotenv.config();
 // Get the trips for a specific user.
 router.get(
   "/user/:user_id",

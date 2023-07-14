@@ -1,5 +1,5 @@
 import React from "react";
-import FlightItineraryItemDetails from "./flight_itinerary_item_details";
+import FlightItineraryItemDetails from "./FlightItineraryItemDetails";
 import CreateFlightItineraryItem from "./CreateFlightItineraryItem";
 
 const FlightItineraryItem = ({ flightItineraryItems, deleteFlightItem }) => {

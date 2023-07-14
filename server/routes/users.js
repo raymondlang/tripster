@@ -3,12 +3,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 
-import keys from "../config/keys";
-import User from "../../models/User";
+import dotenv from "dotenv";
+import User from "../../models/User.js";
 
-import validateRegisterInput from "../validation/register";
-import validateLoginInput from "../validation/login";
+import validateRegisterInput from "../validation/register.js";
+import validateLoginInput from "../validation/login.js";
 
+dotenv.config();
 const router = express.Router();
 
 // Current user
@@ -56,7 +57,7 @@ router.post("/register", (req, res) => {
 
               jwt.sign(
                 payload,
-                keys.secretOrKey,
+                process.env.SECRET_KEY,
                 { expiresIn: 3600 },
                 (err, token) => {
                   res.json({
@@ -95,7 +96,7 @@ router.post("/login", (req, res) => {
         const payload = { id: user.id, email: user.email };
         jwt.sign(
           payload,
-          keys.secretOrKey,
+          process.env.SECRET_KEY,
           { expiresIn: 3600 }, // Key now expires in one hour.
           (err, token) => {
             res.json({

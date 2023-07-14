@@ -24,7 +24,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // middleware
-app.use(passport.initialize());
+// app.use(passport.initialize());
 // require("./config/passport")(passport);
 
 app.use(bodyParser.urlencoded({ extended: false }));
