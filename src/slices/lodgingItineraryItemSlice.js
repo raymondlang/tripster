@@ -69,4 +69,12 @@ const lodgingItinerarySlice = createSlice({
   },
 });
 
+export const {
+  receiveItineraryItem,
+  receiveNewItineraryItem,
+  receiveAllLodgingItineraryItems,
+  receiveErrors,
+  removeItem,
+} = lodgingItineraryItemsSlice.actions;
+
 export default lodgingItinerarySlice.reducer;

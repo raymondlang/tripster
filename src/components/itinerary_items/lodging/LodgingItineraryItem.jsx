@@ -1,6 +1,6 @@
 import React from "react";
-import LodgingItineraryItemDetails from "./lodging_itinerary_item_details";
-import CreateLodgingItineraryItemContainer from "./create_lodging_itinerary_container";
+import LodgingItineraryItemDetails from "./LodgingItineraryItemDetails";
+import CreateLodgingItineraryItem from "./CreateLodgingItineraryItem";
 
 const LodgingItineraryItem = ({ lodgingItineraryItems, deleteLodgingItem }) => {
   const itemsList = lodgingItineraryItems.map((item, idx) => {
@@ -22,7 +22,7 @@ const LodgingItineraryItem = ({ lodgingItineraryItems, deleteLodgingItem }) => {
         </li>
       </ul>
       <br />
-      <CreateLodgingItineraryItemContainer />
+      <CreateLodgingItineraryItem />
     </div>
   );
 };

@@ -1,23 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { createItineraryItem } from "../../slices/intineraryItemSlice";
+import { createItineraryItem } from "../../../slices/intineraryItemSlice";
+import { fetchATrip } from "../../../slices/tripSlice";
 
-const CreateItineraryItem = ({ tripId }) => {
+const CreateFlightItineraryItem = () => {
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
-
-  const errors = useSelector(selectItineraryItemErrors);
-
+  const [errors, setErrors] = useState({});
+  const tripId = useSelector((state) => Object.keys(state.trips.trip)[0]);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    return () => {
-      dispatch(clearErrors());
-    };
-  }, [dispatch]);
+  const handleChange = (field) => (e) => {
+    const value = e.target.value;
+    switch (field) {
+      case "itemName":
+        setItemName(value);
+        break;
+      case "category":
+        setCategory(value);
+        break;
+      case "address":
+        setAddress(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,7 +47,12 @@ const CreateItineraryItem = ({ tripId }) => {
       setCategory("");
       setAddress("");
       setDescription("");
+      setErrors({});
     });
+  };
+
+  const clearErrors = () => {
+    dispatch(receiveErrors({}));
   };
 
   return (
@@ -46,7 +65,7 @@ const CreateItineraryItem = ({ tripId }) => {
                 className="create-item-input-1"
                 type="text"
                 value={itemName}
-                onChange={(e) => setItemName(e.target.value)}
+                onChange={handleChange("itemName")}
                 placeholder="Itinerary Item Name*"
               />
               <br />
@@ -57,7 +76,7 @@ const CreateItineraryItem = ({ tripId }) => {
                 className="create-item-input-1"
                 type="text"
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={handleChange("category")}
                 placeholder="Category*"
               />
               <br />
@@ -69,7 +88,7 @@ const CreateItineraryItem = ({ tripId }) => {
               className="create-item-input"
               type="text"
               value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={handleChange("address")}
               placeholder="Address*"
             />
             <br />
@@ -78,11 +97,11 @@ const CreateItineraryItem = ({ tripId }) => {
             className="create-item-input"
             type="text"
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={handleChange("description")}
             placeholder="Description*"
           />
           <br />
-          <div></div>
+          <div />
 
           {/* <div className="create-item-errors">
             {renderErrors()}
@@ -98,4 +117,4 @@ const CreateItineraryItem = ({ tripId }) => {
   );
 };
 
-export default withRouter(CreateItineraryItem);
+export default withRouter(CreateFlightItineraryItem);
