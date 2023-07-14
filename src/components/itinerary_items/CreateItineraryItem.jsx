@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {
-  createItineraryItem,
-  fetchATrip,
-  clearErrors,
-  selectItineraryItemErrors,
-} from "../../../actions/itinerary_item_actions";
+import { createItineraryItem } from "../../slices/intineraryItemSlice";
 
 const CreateItineraryItem = ({ tripId }) => {
   const [itemName, setItemName] = useState("");
