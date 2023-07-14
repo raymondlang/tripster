@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createComment } from "../../actions/comment_actions";
+import { createComment } from "../../slices/commentSlice";
 
 const CreateComment = () => {
   const currentUser = useSelector((state) => state.session.user);

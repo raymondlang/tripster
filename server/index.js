@@ -2,7 +2,7 @@ import express from "express";
 const app = express();
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
-// import passport from "passport";
+import passport from "passport";
 import path from "path";
 import dotenv from "dotenv";
 import user from "./routes/users.js";
@@ -11,7 +11,7 @@ import trip from "./routes/trips.js";
 dotenv.config();
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("frontend/build"));
-  app.get("/", (res, req) => {
+  app.get("/", (res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
 }
@@ -24,7 +24,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // middleware
-// app.use(passport.initialize());
+app.use(passport.initialize());
 // require("./config/passport")(passport);
 
 app.use(bodyParser.urlencoded({ extended: false }));

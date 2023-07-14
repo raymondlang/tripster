@@ -5,6 +5,7 @@ import {
   deleteComment,
   receiveErrors,
 } from "../../actions/comment_actions";
+import CreateComment from "./CreateComment";
 
 const Comments = () => {
   const dispatch = useDispatch();
