@@ -26,9 +26,9 @@ const LoginForm = () => {
     dispatch(login(user));
   };
 
-  const handleClearErrors = () => {
-    dispatch(receiveErrors([]));
-  };
+  //   const handleClearErrors = () => {
+  //     dispatch(receiveErrors([]));
+  //   };
 
   const renderErrors = () => {
     return (

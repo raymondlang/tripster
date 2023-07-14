@@ -75,6 +75,10 @@ const Comments = () => {
         </ul>
       </div>
       <div className="comments-subcontainer-anchor"></div>
+
+      <div className="create-comment-container">
+        <CreateComment />
+      </div>
     </div>
   );
 };
