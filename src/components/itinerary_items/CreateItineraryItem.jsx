@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { createItineraryItem } from "../../slices/intineraryItemSlice";
+import { useNavigate } from "react-router-dom";
+import {
+  createItineraryItem,
+  clearErrors,
+} from "../../slices/intineraryItemSlice";
+import { selectItineraryItemErrors } from "../../selectors/intineraryItemSelectors";
 
-const CreateItineraryItem = ({ tripId }) => {
+const CreateItineraryItem = () => {
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
@@ -12,6 +16,7 @@ const CreateItineraryItem = ({ tripId }) => {
   const errors = useSelector(selectItineraryItemErrors);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     return () => {
@@ -26,13 +31,13 @@ const CreateItineraryItem = ({ tripId }) => {
       category,
       address,
       description,
-      tripId,
     };
     dispatch(createItineraryItem(item)).then(() => {
       setItemName("");
       setCategory("");
       setAddress("");
       setDescription("");
+      navigate("/"); // Redirect to the desired page after form submission
     });
   };
 
@@ -98,4 +103,4 @@ const CreateItineraryItem = ({ tripId }) => {
   );
 };
 
-export default withRouter(CreateItineraryItem);
+export default CreateItineraryItem;
