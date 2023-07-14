@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchATrip } from "../../slices/tripSlice";
 import { deleteItem } from "../../slices/intineraryItemSlice";
@@ -13,10 +13,11 @@ import LodgingItineraryItem from "../itinerary_items/lodging/lodging_itinerary_i
 import ItineraryItem from "../itinerary_items/other/itinerary_item";
 import FoodItineraryItem from "../itinerary_items/food/food_itinerary_item";
 import Map from "../map/map";
+import { useParams } from "react-router-dom";
 
-const TripPage = ({ match }) => {
+const TripPage = () => {
   const dispatch = useDispatch();
-  const tripId = match.params.tripId;
+  const { tripId } = useParams();
   const trip = useSelector((state) => state.trips.trip);
   const users = useSelector((state) => state.users);
   const comments = useSelector((state) => state.comments);
