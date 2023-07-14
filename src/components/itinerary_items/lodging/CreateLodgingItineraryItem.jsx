@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { createItineraryItem } from "../../../slices/intineraryItemSlice";
 import { fetchATrip } from "../../../slices/tripSlice";
 
-const CreateLodgingItineraryItem = ({ history }) => {
+const CreateLodgingItineraryItem = () => {
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
@@ -13,6 +13,7 @@ const CreateLodgingItineraryItem = ({ history }) => {
 
   const tripId = useSelector((state) => Object.keys(state.trips.trip)[0]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setErrors({});
@@ -34,6 +35,7 @@ const CreateLodgingItineraryItem = ({ history }) => {
         setAddress("");
         setDescription("");
         setErrors({});
+        navigate("/"); // Redirect to the desired page after form submission
       })
       .catch((err) => {
         if (err.response && err.response.data) {
@@ -120,4 +122,4 @@ const CreateLodgingItineraryItem = ({ history }) => {
   );
 };
 
-export default withRouter(CreateLodgingItineraryItem);
+export default CreateLodgingItineraryItem;

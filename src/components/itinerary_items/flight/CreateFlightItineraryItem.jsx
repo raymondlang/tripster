@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector, useNavigate } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createItineraryItem } from "../../../slices/intineraryItemSlice";
 import { fetchATrip } from "../../../slices/tripSlice";
+import { useNavigate } from "react-router-dom";
 
 const CreateFlightItineraryItem = () => {
   const [itemName, setItemName] = useState("");

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createItineraryItem } from "../../../slices/intineraryItemSlice";
 
-const CreateFlightItineraryItem = ({ tripId }) => {
+const CreateFoodItineraryItem = ({ tripId }) => {
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
@@ -39,6 +40,7 @@ const CreateFlightItineraryItem = ({ tripId }) => {
       setAddress("");
       setDescription("");
       setErrors({});
+      navigate("/ ");
     });
   };
 
@@ -100,4 +102,4 @@ const CreateFlightItineraryItem = ({ tripId }) => {
   );
 };
 
-export default withRouter(CreateFlightItineraryItem);
+export default CreateFoodItineraryItem;

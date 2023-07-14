@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   createItineraryItem,
-  clearErrors,
+  // clearErrors,
 } from "../../slices/intineraryItemSlice";
-import { selectItineraryItemErrors } from "../../selectors/intineraryItemSelectors";
 
 const CreateItineraryItem = () => {
   const [itemName, setItemName] = useState("");
