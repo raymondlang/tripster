@@ -33,7 +33,7 @@ export const deleteLodgingItem = createAsyncThunk(
   }
 );
 
-const lodgingItinerarySlice = createSlice({
+const lodgingItineraryItemSlice = createSlice({
   name: "lodgingItineraryItems",
   initialState: {
     items: {},
@@ -75,6 +75,6 @@ export const {
   receiveAllLodgingItineraryItems,
   receiveErrors,
   removeItem,
-} = lodgingItineraryItemsSlice.actions;
+} = lodgingItineraryItemSlice.actions;
 
-export default lodgingItinerarySlice.reducer;
+export default lodgingItineraryItemSlice.reducer;

@@ -1,10 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchComments,
-  deleteComment,
-  receiveErrors,
-} from "../../actions/comment_actions";
+import { fetchAllComments, deleteComment } from "../../slices/commentSlice";
 import CreateComment from "./CreateComment";
 
 const Comments = () => {
@@ -14,7 +10,7 @@ const Comments = () => {
   const mRef = useRef(null);
 
   useEffect(() => {
-    dispatch(fetchComments());
+    dispatch(fetchAllComments());
   }, [dispatch]);
 
   useEffect(() => {

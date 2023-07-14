@@ -5,12 +5,12 @@ import { deleteItem } from "../../slices/intineraryItemSlice";
 import { deleteFlightItem } from "../../slices/flightItineraryItemSlice";
 import { deleteLodgingItem } from "../../slices/lodgingItineraryItemSlice";
 import { deleteFoodItem } from "../../slices/foodItineraryItemSlice";
-import ItineraryContainer from "../itinerary_items/itinerary";
-import FlightItineraryItem from "../itinerary_items/flight/flight_itinerary_item";
-import LodgingItineraryItem from "../itinerary_items/lodging/lodging_itinerary_item";
-import ItineraryItem from "../itinerary_items/other/itinerary_item";
-import FoodItineraryItem from "../itinerary_items/food/food_itinerary_item";
-import Map from "../map/map";
+import Itinerary from "../itinerary_items/Itinerary";
+import FlightItineraryItem from "../../../models/FlightItineraryItem";
+import LodgingItineraryItem from "../../../models/LodgingItineraryItem";
+import ItineraryItem from "../../../models/ItineraryItem";
+import FoodItineraryItem from "../../../models/FoodItineraryItem";
+// import Map from "../map/map";
 import { useParams } from "react-router-dom";
 import UsersList from "../users_list/UsersList";
 import Comments from "../comments/comments";
@@ -94,14 +94,12 @@ const TripPage = () => {
             <br />
           </header>
           <div className="trip-items-subcontainer">
-            <ItineraryContainer tripId={tripId} tabs={tabArr} />
+            <Itinerary tripId={tripId} tabs={tabArr} />
           </div>
         </div>
         <div className="filler-queen"></div>
       </div>
-      <div className="map-container">
-        <Map />
-      </div>
+      <div className="map-container">{/* <Map /> */}</div>
     </div>
   );
 };

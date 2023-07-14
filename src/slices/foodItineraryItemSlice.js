@@ -33,7 +33,7 @@ export const deleteFoodItem = createAsyncThunk(
   }
 );
 
-const foodItinerarySlice = createSlice({
+const foodItineraryItemSlice = createSlice({
   name: "foodItineraryItems",
   initialState: {
     items: {},
@@ -69,4 +69,12 @@ const foodItinerarySlice = createSlice({
   },
 });
 
-export default foodItinerarySlice.reducer;
+export const {
+  receiveItineraryItem,
+  receiveNewItineraryItem,
+  receiveAllFoodItineraryItems,
+  receiveErrors,
+  removeItem,
+} = foodItineraryItemSlice.actions;
+
+export default foodItineraryItemSlice.reducer;
