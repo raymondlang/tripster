@@ -1,5 +1,5 @@
 import ItineraryItemDetails from "./itinerary_item_details";
-import CreateItineraryItemContainer from "./create_itinerary_container";
+import CreateItineraryItem from "./flight/CreateItineraryItem";
 
 const ItineraryItem = (props) => {
   const itemsList = props.itineraryItems.map((item, idx) => (
