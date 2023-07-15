@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../slices/sessionSlice";
 
@@ -10,12 +10,17 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.currentUser);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentUser === true) {
-      history.push("/profile");
+    if (currentUser) {
+      navigate("/profile");
     }
-  }, [currentUser]);
+  }, [currentUser, navigate]);
+
+  const handleLoginSuccess = () => {
+    navigate("/profile");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,12 +28,14 @@ const LoginForm = () => {
       email,
       password,
     };
-    dispatch(login(user));
+    dispatch(login(user))
+      .then(() => {
+        handleLoginSuccess();
+      })
+      .catch((error) => {
+        setErrors(error.response.data);
+      });
   };
-
-  //   const handleClearErrors = () => {
-  //     dispatch(receiveErrors([]));
-  //   };
 
   const renderErrors = () => {
     return (

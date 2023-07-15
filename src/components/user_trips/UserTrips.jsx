@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import TripDetails from "./trip_details";
+import TripDetails from "./TripDetails";
 import { Link } from "react-router-dom";
 import { fetchUserTrips, deleteTrip } from "../../slices/tripSlice";
 
 const UserTrips = () => {
   const dispatch = useDispatch();
-  const trips = useSelector((state) => Object.values(state.trips.user));
-  const currentUser = useSelector((state) => state.session.user);
+  const trips = useSelector((state) => Object.values(state.trip.trip));
+  const currentUser = useSelector((state) => state.session?.user);
 
   useEffect(() => {
     dispatch(fetchUserTrips(currentUser.id));

@@ -7,6 +7,7 @@ import path from "path";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users.js";
 import tripRoutes from "./routes/trips.js";
+import passportConfig from "./config/passport";
 
 dotenv.config();
 const app = express();
@@ -28,7 +29,7 @@ mongoose
 
 // middleware
 app.use(passport.initialize());
-// require("./config/passport")(passport);
+passportConfig(passport);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
