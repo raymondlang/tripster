@@ -15,7 +15,7 @@ const AuthRoute = ({ component: Component, ...rest }) => {
         ) : (
           <Navigate
             to={{
-              pathname: "/profile",
+              pathname: "/user/:user_id",
               state: { from: location },
             }}
           />

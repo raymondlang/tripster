@@ -18,6 +18,10 @@ const LoginForm = () => {
     }
   }, [currentUser, navigate]);
 
+  useEffect(() => {
+    setErrors({});
+  }, [email, password]);
+
   const handleLoginSuccess = () => {
     navigate("/profile");
   };
@@ -25,27 +29,33 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const user = {
-      email,
-      password,
+      email: email,
+      password: password,
     };
+
     dispatch(login(user))
-      .then(() => {
+      .then((res) => {
+        console.log(res);
         handleLoginSuccess();
       })
       .catch((error) => {
-        setErrors(error.response.data);
+        if (error.response && error.response.data) {
+          setErrors(error.response.data);
+        }
+        console.log(error.response);
       });
   };
 
   const renderErrors = () => {
     return (
-      <ul>
-        {Object.keys(errors).map((error, idx) => (
-          <li className="login-form-errors-element" key={`error-${idx}`}>
-            {errors[error]}
-          </li>
-        ))}
-      </ul>
+      <div>
+        {errors.email && (
+          <p className="login-form-error-message">{errors.email}</p>
+        )}
+        {errors.password && (
+          <p className="login-form-error-message">{errors.password}</p>
+        )}
+      </div>
     );
   };
 
@@ -62,6 +72,9 @@ const LoginForm = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
             />
+            {errors.email && (
+              <p className="login-form-error-message">{errors.email}</p>
+            )}
             <br />
           </div>
 
@@ -73,10 +86,11 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
+            {errors.password && (
+              <p className="login-form-error-message">{errors.password}</p>
+            )}
             <br />
           </div>
-
-          <div className="login-form-errors">{renderErrors()}</div>
 
           <button className="login-form-submit-btn" type="submit">
             Log In

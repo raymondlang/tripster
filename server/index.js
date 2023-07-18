@@ -7,7 +7,7 @@ import path from "path";
 import dotenv from "dotenv";
 import userRoutes from "./routes/users.js";
 import tripRoutes from "./routes/trips.js";
-import passportConfig from "./config/passport";
+import passportConfig from "./config/passport.js";
 
 dotenv.config();
 const app = express();

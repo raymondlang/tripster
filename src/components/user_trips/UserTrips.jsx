@@ -7,11 +7,11 @@ import { fetchUserTrips, deleteTrip } from "../../slices/tripSlice";
 const UserTrips = () => {
   const dispatch = useDispatch();
   const trips = useSelector((state) => Object.values(state.trip.trip));
-  const currentUser = useSelector((state) => state.session?.user);
+  const currentUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
-    dispatch(fetchUserTrips(currentUser.id));
-  }, [dispatch, currentUser.id]);
+    dispatch(fetchUserTrips(currentUser._id));
+  }, [dispatch, currentUser._id]);
 
   if (trips.length === 0) {
     return (

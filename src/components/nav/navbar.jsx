@@ -16,7 +16,7 @@ const NavBar = () => {
     if (loggedIn) {
       return (
         <div className="auth-navbar-container">
-          <Link className="my-trips" to="/profile">
+          <Link className="my-trips" to="/user/:user_id">
             MY PROFILE
           </Link>
           <button className="logout-btn" onClick={handleLogout}>

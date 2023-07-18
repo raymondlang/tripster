@@ -20,6 +20,8 @@ const store = configureStore({
     flightItineraryItem: flightItineraryItemReducer,
     lodgingItem: lodingingItemItineraryItemReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
   //   //   devTools: process.env.NODE_ENV !== "production",
   //   preloadedState: {},
 });

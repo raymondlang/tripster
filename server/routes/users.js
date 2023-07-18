@@ -77,7 +77,7 @@ router.post("/register", (req, res) => {
 // Post session
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
-  console.log(req);
+
   if (!isValid) {
     return res.status(400).json(errors);
   }
@@ -93,7 +93,7 @@ router.post("/login", (req, res) => {
     bcrypt.compare(req.body.password, user.password).then((isMatch) => {
       if (isMatch) {
         // Correct credentials, log user in.
-        const payload = { id: user.id, email: user.email };
+        const payload = { id: user._id, email: user.email };
         jwt.sign(
           payload,
           process.env.SECRET_KEY,

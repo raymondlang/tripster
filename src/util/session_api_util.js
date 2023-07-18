@@ -15,5 +15,6 @@ export const signup = (userData) => {
 };
 
 export const login = (userData) => {
+  console.log(userData);
   return axios.post(`${baseURL}/api/users/login`, userData);
 };

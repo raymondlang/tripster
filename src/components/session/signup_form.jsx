@@ -8,7 +8,7 @@ const SignupForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  //   const errors = useSelector((state) => state.errors.session);
+  const [errors, setErrors] = useState({});
   const session = useSelector((state) => state.session);
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -27,8 +27,12 @@ const SignupForm = () => {
       password,
       password2,
     };
-    console.log(user);
-    dispatch(signup(user, history));
+
+    dispatch(signup(user, history)).catch((error) => {
+      if (error.response && error.response.data) {
+        setErrors(error.response.data);
+      }
+    });
   };
 
   const handleDemo = (e) => {
@@ -36,17 +40,17 @@ const SignupForm = () => {
     dispatch(login({ email: "demo@gmail.com", password: "password" }));
   };
 
-  //   const renderErrors = () => {
-  //     return (
-  //       <ul>
-  //         {Object.keys(errors).map((error, idx) => (
-  //           <li className="signup-form-errors-element" key={`error-${idx}`}>
-  //             {errors[error]}
-  //           </li>
-  //         ))}
-  //       </ul>
-  //     );
-  //   };
+  const renderErrors = () => {
+    return (
+      <ul>
+        {Object.keys(errors).map((error, idx) => (
+          <li className="signup-form-errors-element" key={`error-${idx}`}>
+            {errors[error]}
+          </li>
+        ))}
+      </ul>
+    );
+  };
 
   return (
     <div className="signup-form-container">
@@ -97,7 +101,7 @@ const SignupForm = () => {
             <br />
           </div>
 
-          {/* <div className="signup-form-errors">{renderErrors()}</div> */}
+          <div className="signup-form-errors">{renderErrors()}</div>
 
           <button className="signup-form-submit-btn" type="submit">
             Sign Up
