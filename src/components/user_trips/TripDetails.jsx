@@ -1,23 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { deleteTrip } from "../../slices/tripSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 const TripDetails = ({ trip }) => {
-  const edit =
-    new Date(trip.startDate.slice(0, 10)) < new Date() ? (
-      <div className="edit-trip-past">Bon Voyage</div>
-    ) : (
-      <Link className="edit-trip" to={`trips/${trip._id}/edit`} trip={trip}>
-        Edit This Trip
-      </Link>
-    );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    dispatch(deleteTrip(trip._id));
+  };
+
+  const handleEdit = () => {
+    navigate(`/trips/${trip._id}/edit`);
+  };
 
   return (
     <li className="trip-card">
       <div>
         <div className="trip-name">
           <h2 className="trip-details-color">
-            <Link to={`trips/${trip._id}`}>{trip.tripName}</Link>
+            <Link to={`/trips/${trip._id}`}>{trip.tripName}</Link>
           </h2>
         </div>
 
@@ -31,9 +34,11 @@ const TripDetails = ({ trip }) => {
       </div>
 
       <div className="user-trip-links">
-        {edit}
-        <button className="delete-trip" onClick={() => deleteTrip(trip._id)}>
+        <button className="delete-trip" onClick={handleDelete}>
           Delete This Trip
+        </button>
+        <button className="edit-trip" onClick={handleEdit}>
+          Edit This Trip
         </button>
       </div>
     </li>

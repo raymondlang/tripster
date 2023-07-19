@@ -76,7 +76,7 @@ router.get(
       .then((trip) => {
         // Check if the current user is part of the trip.
         if (trip.users.some((user) => req.user.id === user.id)) {
-          return res.json({ [trip.id]: trip });
+          return res.json({ [trip._id]: trip });
         } else {
           // This user isn't authorized to view this trip.
           return res
@@ -123,12 +123,15 @@ router.patch(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = ValidateTripInput(req.body);
+    const { errors, isValid } = validateTripInput(req.body);
     if (!isValid) {
       return res.status(400).json(errors);
     }
 
-    Trip.findByIdAndUpdate(req.body._id, req.body, { new: true, upsert: true })
+    Trip.findByIdAndUpdate(req.params._id, req.body, {
+      new: true,
+      upsert: true,
+    })
       // .then(Trip.findById(req.params.id)
       //     .populate({
       //         path: "users",
@@ -171,6 +174,7 @@ router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    console.log("Trip ID:", req.params.id); // Log the trip ID
     Trip.findById(req.params.id)
       .then((trip) => {
         if (trip.users.includes(req.user.id)) {

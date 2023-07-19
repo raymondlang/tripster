@@ -81,7 +81,9 @@ const tripsSlice = createSlice({
         state.trip = action.payload;
       })
       .addCase(deleteTrip.fulfilled, (state, action) => {
-        state.trips = state.trips.filter((trip) => trip._id !== action.payload);
+        state.trip.trips = state.trip.trips.filter(
+          (trip) => trip._id !== action.payload
+        );
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected") && action.error.message,

@@ -12,6 +12,7 @@ import UserTrips from "./components/user_trips/UserTrips";
 import { AuthRoute, ProtectedRoute } from "./util/route_util";
 import CreateTripForm from "./components/trip/CreateTripForm";
 import { useSelector } from "react-redux";
+import EditTripForm from "./components/trip/EditTripForm";
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.session.isAuthenticated);
@@ -32,6 +33,7 @@ const App = () => {
         />
         <Route exact path="trips/create" element={<CreateTripForm />} />
         <Route exact path="/trips/:tripId" element={<TripPage />} />
+        <Route exact path="/trips/:tripId/edit" element={<EditTripForm />} />
       </Routes>
       <Footer />
     </>

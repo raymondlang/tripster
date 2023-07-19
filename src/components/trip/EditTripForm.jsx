@@ -1,32 +1,68 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchATrip, updateTrip } from "../../slices/tripSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
-const EditTripForm = ({ trip, handleSubmit, errors, clearErrors }) => {
-  const [tripName, setTripName] = useState(trip.tripName);
-  const [destination, setDestination] = useState(trip.destination);
-  const [startDate, setStartDate] = useState(trip.startDate);
-  const [endDate, setEndDate] = useState(trip.endDate);
+const EditTripForm = () => {
+  const { tripId } = useParams();
+  const dispatch = useDispatch();
+  const trip = useSelector((state) =>
+    state.trip.trips.find((trip) => trip._id === tripId)
+  );
   const navigate = useNavigate();
+  const [formData, setFormData] = useState(trip);
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    const updatedTrip = {
-      ...trip,
-      tripName,
-      destination,
-      startDate,
-      endDate,
-    };
-    handleSubmit(updatedTrip);
+  useEffect(() => {
+    dispatch(fetchATrip(tripId));
+  }, [dispatch, tripId]);
+
+  const handleSubmit = (updatedTrip) => {
+    dispatch(updateTrip(updatedTrip)).then(() => {
+      dispatch(fetchATrip(tripId)).then(() => {
+        navigate(`/trips/${tripId}`);
+      });
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "startDate") {
+      setFormData({
+        ...formData,
+        startDate: value,
+        endDate: value > formData.endDate ? value : formData.endDate,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const currDate = () => {
     const today = new Date();
-    const dd = String(today.getDate()).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
     const yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
     return `${yyyy}-${mm}-${dd}`;
   };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    handleSubmit(formData);
+  };
+
+  if (!trip) {
+    return null;
+  }
 
   return (
     <div className="edit-trip-container">
@@ -39,8 +75,9 @@ const EditTripForm = ({ trip, handleSubmit, errors, clearErrors }) => {
             <input
               className="edit-trip-input-element"
               type="text"
-              value={tripName}
-              onChange={(e) => setTripName(e.target.value)}
+              name="tripName"
+              value={formData.tripName}
+              onChange={handleChange}
               placeholder="Trip Name"
             />
           </div>
@@ -48,24 +85,27 @@ const EditTripForm = ({ trip, handleSubmit, errors, clearErrors }) => {
             <input
               className="edit-trip-input-element"
               type="text"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
+              name="destination"
+              value={formData.destination}
+              onChange={handleChange}
               placeholder="Destination"
             />
           </div>
           <input
             className="edit-trip-date-element"
             type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleChange}
             min={currDate()}
           />
           <input
             className="edit-trip-date-element"
             type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            min={startDate.slice(0, 10)}
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleChange}
+            min={formData.startDate.slice(0, 10)}
           />
           <input
             className="edit-trip-submit-text"

@@ -18,5 +18,5 @@ export const updateTrip = (data) => {
 }; //unsure of data.id
 
 export const deleteTrip = (tripId) => {
-  return axios.delete(`${baseURL}api/trips/${tripId}`);
+  return axios.delete(`${baseURL}/api/trips/${tripId}`);
 };

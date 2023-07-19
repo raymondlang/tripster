@@ -16,6 +16,7 @@ const UserTrips = () => {
   const trips = useSelector((state) => Object.values(state.trip.trips));
   const currentUser = useSelector((state) => state.session.user);
   console.log(currentUser);
+  console.log(trips);
 
   useEffect(() => {
     dispatch(fetchUserTrips(currentUser.id));
