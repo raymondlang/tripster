@@ -10,7 +10,9 @@ const CreateFlightItineraryItem = () => {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
-  const tripId = useSelector((state) => Object.keys(state.trips.trip)[0]);
+  const tripId = useSelector(
+    (state) => Object.keys(state.trip.new.data._id)[0]
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Use the useNavigate hook to access the navigation functions
 

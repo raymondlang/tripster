@@ -9,6 +9,7 @@ export const fetchTrip = (tripId) => {
 };
 
 export const createTrip = (data) => {
+  console.log(data);
   return axios.post(`${baseURL}/api/trips/`, data);
 };
 

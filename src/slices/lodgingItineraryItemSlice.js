@@ -1,38 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as ItemAPIUtil from "../util/lodging_itinerary_item_api_util";
 
-export const fetchAllLodgingItineraryItems = createAsyncThunk(
-  "lodgingItineraryItems/fetchAll",
-  async () => {
-    const response = await ItemAPIUtil.fetchAllLodgingItineraryItems();
-    return response.data;
-  }
-);
-
-export const fetchLodgingItineraryItem = createAsyncThunk(
-  "lodgingItineraryItems/fetch",
-  async (itemId) => {
-    const response = await ItemAPIUtil.fetchItineraryItem(itemId);
-    return response.data;
-  }
-);
-
-export const createLodgingItineraryItem = createAsyncThunk(
-  "lodgingItineraryItems/create",
-  async (data) => {
-    const response = await ItemAPIUtil.createItineraryItem(data);
-    return response.data;
-  }
-);
-
-export const deleteLodgingItem = createAsyncThunk(
-  "lodgingItineraryItems/delete",
-  async (itemId) => {
-    await ItemAPIUtil.deleteItineraryItem(itemId);
-    return itemId;
-  }
-);
-
 const lodgingItineraryItemSlice = createSlice({
   name: "lodgingItineraryItems",
   initialState: {
@@ -68,6 +36,38 @@ const lodgingItineraryItemSlice = createSlice({
       );
   },
 });
+
+export const fetchAllLodgingItineraryItems = createAsyncThunk(
+  "lodgingItineraryItems/fetchAll",
+  async () => {
+    const response = await ItemAPIUtil.fetchAllLodgingItineraryItems();
+    return response.data;
+  }
+);
+
+export const fetchLodgingItineraryItem = createAsyncThunk(
+  "lodgingItineraryItems/fetch",
+  async (itemId) => {
+    const response = await ItemAPIUtil.fetchItineraryItem(itemId);
+    return response.data;
+  }
+);
+
+export const createLodgingItineraryItem = createAsyncThunk(
+  "lodgingItineraryItems/create",
+  async (data) => {
+    const response = await ItemAPIUtil.createItineraryItem(data);
+    return response.data;
+  }
+);
+
+export const deleteLodgingItem = createAsyncThunk(
+  "lodgingItineraryItems/delete",
+  async (itemId) => {
+    await ItemAPIUtil.deleteItineraryItem(itemId);
+    return itemId;
+  }
+);
 
 export const {
   receiveItineraryItem,

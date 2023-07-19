@@ -1,38 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as ItemAPIUtil from "../util/itinerary_item_api_util";
 
-export const fetchAllItineraryItems = createAsyncThunk(
-  "itineraryItems/fetchAll",
-  async () => {
-    const response = await ItemAPIUtil.fetchAllItineraryItems();
-    return response.data;
-  }
-);
-
-export const fetchItineraryItem = createAsyncThunk(
-  "itineraryItems/fetch",
-  async (itemId) => {
-    const response = await ItemAPIUtil.fetchItineraryItem(itemId);
-    return response.data;
-  }
-);
-
-export const createItineraryItem = createAsyncThunk(
-  "itineraryItems/create",
-  async (data) => {
-    const response = await ItemAPIUtil.createItineraryItem(data);
-    return response.data;
-  }
-);
-
-export const deleteItem = createAsyncThunk(
-  "itineraryItems/delete",
-  async (itemId) => {
-    await ItemAPIUtil.deleteItineraryItem(itemId);
-    return itemId;
-  }
-);
-
 const itemsSlice = createSlice({
   name: "itineraryItems",
   initialState: {
@@ -68,5 +36,37 @@ const itemsSlice = createSlice({
       );
   },
 });
+
+export const fetchAllItineraryItems = createAsyncThunk(
+  "itineraryItems/fetchAll",
+  async () => {
+    const response = await ItemAPIUtil.fetchAllItineraryItems();
+    return response.data;
+  }
+);
+
+export const fetchItineraryItem = createAsyncThunk(
+  "itineraryItems/fetch",
+  async (itemId) => {
+    const response = await ItemAPIUtil.fetchItineraryItem(itemId);
+    return response.data;
+  }
+);
+
+export const createItineraryItem = createAsyncThunk(
+  "itineraryItems/create",
+  async (data) => {
+    const response = await ItemAPIUtil.createItineraryItem(data);
+    return response.data;
+  }
+);
+
+export const deleteItem = createAsyncThunk(
+  "itineraryItems/delete",
+  async (itemId) => {
+    await ItemAPIUtil.deleteItineraryItem(itemId);
+    return itemId;
+  }
+);
 
 export default itemsSlice.reducer;

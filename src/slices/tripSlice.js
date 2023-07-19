@@ -1,88 +1,95 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as APIUtil from "../util/trip_api_util";
 
 const initialState = {
-  user: {},
-  trip: {},
-  new: undefined,
+  trips: [],
+  trip: null,
+  errors: null,
 };
 
-const tripSlice = createSlice({
-  name: "trip",
+export const fetchUserTrips = createAsyncThunk(
+  "trips/fetchUserTrips",
+  async (userId) => {
+    try {
+      const response = await APIUtil.fetchAllTrips(userId);
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  }
+);
+
+export const fetchATrip = createAsyncThunk(
+  "trips/fetchATrip",
+  async (tripId) => {
+    try {
+      const response = await APIUtil.fetchTrip(tripId);
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  }
+);
+
+export const createTrip = createAsyncThunk("trips/createTrip", async (data) => {
+  try {
+    const response = await APIUtil.createTrip(data);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+});
+
+export const updateTrip = createAsyncThunk("trips/updateTrip", async (data) => {
+  try {
+    const response = await APIUtil.updateTrip(data);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+});
+
+export const deleteTrip = createAsyncThunk(
+  "trips/deleteTrip",
+  async (tripId) => {
+    try {
+      await APIUtil.deleteTrip(tripId);
+      return tripId;
+    } catch (error) {
+      throw error.response.data;
+    }
+  }
+);
+
+const tripsSlice = createSlice({
+  name: "trips",
   initialState,
-  reducers: {
-    receiveUserTrips: (state, action) => {
-      state.user = {};
-      action.payload.trips.data.forEach((trip) => {
-        state.user[trip._id] = trip;
-      });
-    },
-    receiveATrip: (state, action) => {
-      state.trip = action.payload.trip.data;
-    },
-    receiveNewTrip: (state, action) => {
-      state.new = action.payload.trip.data;
-    },
-    receiveErrors: (state, action) => {
-      state.errors = action.payload;
-    },
-    removeTrip: (state, action) => {
-      delete state.user[action.payload.tripId];
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserTrips.fulfilled, (state, action) => {
+        state.trips = action.payload;
+      })
+      .addCase(fetchATrip.fulfilled, (state, action) => {
+        state.trip = action.payload;
+      })
+      .addCase(createTrip.fulfilled, (state, action) => {
+        state.trip = action.payload;
+        state.trips.push(action.payload);
+      })
+      .addCase(updateTrip.fulfilled, (state, action) => {
+        state.trip = action.payload;
+      })
+      .addCase(deleteTrip.fulfilled, (state, action) => {
+        state.trips = state.trips.filter((trip) => trip._id !== action.payload);
+      })
+      .addMatcher(
+        (action) => action.type.endsWith("/rejected") && action.error.message,
+        (state, action) => {
+          state.errors = action.error.message;
+        }
+      );
   },
 });
 
-export const {
-  receiveUserTrips,
-  receiveATrip,
-  receiveNewTrip,
-  receiveErrors,
-  removeTrip,
-} = tripSlice.actions;
-
-export const fetchUserTrips = (userId) => async (dispatch) => {
-  try {
-    const trips = await APIUtil.fetchAllTrips(userId);
-    dispatch(receiveUserTrips(trips));
-  } catch (err) {
-    dispatch(receiveErrors(err));
-  }
-};
-
-export const fetchATrip = (tripId) => async (dispatch) => {
-  try {
-    const trip = await APIUtil.fetchTrip(tripId);
-    dispatch(receiveATrip(trip));
-  } catch (err) {
-    dispatch(receiveErrors(err));
-  }
-};
-
-export const createTrip = (data) => async (dispatch) => {
-  try {
-    const trip = await APIUtil.createTrip(data);
-    dispatch(receiveNewTrip(trip));
-  } catch (err) {
-    dispatch(receiveErrors(err.response.data));
-  }
-};
-
-export const updateTrip = (data) => async (dispatch) => {
-  try {
-    const trip = await APIUtil.updateTrip(data);
-    dispatch(receiveATrip(trip));
-  } catch (err) {
-    dispatch(receiveErrors(err.response.data));
-  }
-};
-
-export const deleteTrip = (tripId) => async (dispatch) => {
-  try {
-    await APIUtil.deleteTrip(tripId);
-    dispatch(removeTrip(tripId));
-  } catch (err) {
-    dispatch(receiveErrors(err));
-  }
-};
-
-export default tripSlice.reducer;
+export default tripsSlice.reducer;

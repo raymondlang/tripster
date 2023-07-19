@@ -1,38 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as ItemAPIUtil from "../util/food_itinerary_item_api_util";
 
-export const fetchAllFoodItineraryItems = createAsyncThunk(
-  "foodItineraryItems/fetchAll",
-  async () => {
-    const response = await ItemAPIUtil.fetchAllFoodItineraryItems();
-    return response.data;
-  }
-);
-
-export const fetchFoodItineraryItem = createAsyncThunk(
-  "foodItineraryItems/fetch",
-  async (itemId) => {
-    const response = await ItemAPIUtil.fetchItineraryItem(itemId);
-    return response.data;
-  }
-);
-
-export const createFoodItineraryItem = createAsyncThunk(
-  "foodItineraryItems/create",
-  async (data) => {
-    const response = await ItemAPIUtil.createItineraryItem(data);
-    return response.data;
-  }
-);
-
-export const deleteFoodItem = createAsyncThunk(
-  "foodItineraryItems/delete",
-  async (itemId) => {
-    await ItemAPIUtil.deleteItineraryItem(itemId);
-    return itemId;
-  }
-);
-
 const foodItineraryItemSlice = createSlice({
   name: "foodItineraryItems",
   initialState: {
@@ -68,6 +36,38 @@ const foodItineraryItemSlice = createSlice({
       );
   },
 });
+
+export const fetchAllFoodItineraryItems = createAsyncThunk(
+  "foodItineraryItems/fetchAll",
+  async () => {
+    const response = await ItemAPIUtil.fetchAllFoodItineraryItems();
+    return response.data;
+  }
+);
+
+export const fetchFoodItineraryItem = createAsyncThunk(
+  "foodItineraryItems/fetch",
+  async (itemId) => {
+    const response = await ItemAPIUtil.fetchItineraryItem(itemId);
+    return response.data;
+  }
+);
+
+export const createFoodItineraryItem = createAsyncThunk(
+  "foodItineraryItems/create",
+  async (data) => {
+    const response = await ItemAPIUtil.createItineraryItem(data);
+    return response.data;
+  }
+);
+
+export const deleteFoodItem = createAsyncThunk(
+  "foodItineraryItems/delete",
+  async (itemId) => {
+    await ItemAPIUtil.deleteItineraryItem(itemId);
+    return itemId;
+  }
+);
 
 export const {
   receiveItineraryItem,

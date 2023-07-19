@@ -1,17 +1,25 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
 import TripDetails from "./TripDetails";
 import { Link } from "react-router-dom";
 import { fetchUserTrips, deleteTrip } from "../../slices/tripSlice";
 
+// Create a memoized selector using createSelector
+const selectTrips = createSelector(
+  (state) => state.trip.trip,
+  (trip) => Object.values(trip)
+);
+
 const UserTrips = () => {
   const dispatch = useDispatch();
-  const trips = useSelector((state) => Object.values(state.trip.trip));
+  const trips = useSelector((state) => Object.values(state.trip.trips));
   const currentUser = useSelector((state) => state.session.user);
+  console.log(currentUser);
 
   useEffect(() => {
-    dispatch(fetchUserTrips(currentUser._id));
-  }, [dispatch, currentUser._id]);
+    dispatch(fetchUserTrips(currentUser.id));
+  }, [dispatch, currentUser.id]);
 
   if (trips.length === 0) {
     return (

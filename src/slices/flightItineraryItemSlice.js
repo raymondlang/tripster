@@ -1,38 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as ItemAPIUtil from "../util/flight_itinerary_item_api_util";
 
-export const fetchAllFlightItineraryItems = createAsyncThunk(
-  "flightItineraryItems/fetchAll",
-  async () => {
-    const response = await ItemAPIUtil.fetchAllFlightItineraryItems();
-    return response.data;
-  }
-);
-
-export const fetchItineraryItem = createAsyncThunk(
-  "flightItineraryItems/fetch",
-  async (itemId) => {
-    const response = await ItemAPIUtil.fetchItineraryItem(itemId);
-    return response.data;
-  }
-);
-
-export const createItineraryItem = createAsyncThunk(
-  "flightItineraryItems/create",
-  async (data) => {
-    const response = await ItemAPIUtil.createItineraryItem(data);
-    return response.data;
-  }
-);
-
-export const deleteFlightItem = createAsyncThunk(
-  "flightItineraryItems/delete",
-  async (itemId) => {
-    await ItemAPIUtil.deleteItineraryItem(itemId);
-    return itemId;
-  }
-);
-
 const flightItinerarySlice = createSlice({
   name: "flightItineraryItems",
   initialState: {
@@ -68,5 +36,37 @@ const flightItinerarySlice = createSlice({
       );
   },
 });
+
+export const fetchAllFlightItineraryItems = createAsyncThunk(
+  "flightItineraryItems/fetchAll",
+  async () => {
+    const response = await ItemAPIUtil.fetchAllFlightItineraryItems();
+    return response.data;
+  }
+);
+
+export const fetchItineraryItem = createAsyncThunk(
+  "flightItineraryItems/fetch",
+  async (itemId) => {
+    const response = await ItemAPIUtil.fetchItineraryItem(itemId);
+    return response.data;
+  }
+);
+
+export const createItineraryItem = createAsyncThunk(
+  "flightItineraryItems/create",
+  async (data) => {
+    const response = await ItemAPIUtil.createItineraryItem(data);
+    return response.data;
+  }
+);
+
+export const deleteFlightItem = createAsyncThunk(
+  "flightItineraryItems/delete",
+  async (itemId) => {
+    await ItemAPIUtil.deleteItineraryItem(itemId);
+    return itemId;
+  }
+);
 
 export default flightItinerarySlice.reducer;

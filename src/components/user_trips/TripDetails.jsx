@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { deleteTrip } from "../../slices/tripSlice";
 
-const TripDetails = ({ trip, deleteTrip }) => {
+const TripDetails = ({ trip }) => {
   const edit =
     new Date(trip.startDate.slice(0, 10)) < new Date() ? (
       <div className="edit-trip-past">Bon Voyage</div>

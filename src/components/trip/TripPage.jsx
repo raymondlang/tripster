@@ -18,13 +18,21 @@ import Comments from "../comments/comments";
 const TripPage = () => {
   const dispatch = useDispatch();
   const { tripId } = useParams();
-  const trip = useSelector((state) => state.trips.trip);
-  const users = useSelector((state) => state.users);
-  const comments = useSelector((state) => state.comments);
-  const itineraryItems = useSelector((state) => state.items);
-  const flightItineraryItems = useSelector((state) => state.flightItems);
-  const lodgingItineraryItems = useSelector((state) => state.lodgingItems);
-  const foodItineraryItems = useSelector((state) => state.foodItems);
+  const trip = useSelector((state) => state.trip.new.data.tripName);
+  const users = useSelector((state) => state.trip.new.data.users);
+  const comments = useSelector((state) => state.trip.new.data.comments);
+  const itineraryItems = useSelector(
+    (state) => state.trip.new.data.itineraryItems
+  );
+  const flightItineraryItems = useSelector(
+    (state) => state.trip.new.data.flightItineraryItems
+  );
+  const lodgingItineraryItems = useSelector(
+    (state) => state.trip.new.data.lodgingItineraryItems
+  );
+  const foodItineraryItems = useSelector(
+    (state) => state.trip.new.data.foodItineraryItems
+  );
 
   useEffect(() => {
     dispatch(fetchATrip(tripId));

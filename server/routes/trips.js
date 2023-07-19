@@ -95,7 +95,7 @@ router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = ValidateTripInput(req.body);
+    const { errors, isValid } = validateTripInput(req.body);
     if (!isValid) {
       return res.status(400).json(errors);
     }

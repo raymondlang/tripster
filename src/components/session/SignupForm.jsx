@@ -11,7 +11,7 @@ const SignupForm = () => {
   const [errors, setErrors] = useState({});
   const session = useSelector((state) => state.session);
   const dispatch = useDispatch();
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (session.isSignedIn) {
@@ -35,9 +35,16 @@ const SignupForm = () => {
     });
   };
 
-  const handleDemo = (e) => {
+  const handleDemo = async (e) => {
     e.preventDefault();
-    dispatch(login({ email: "demo@gmail.com", password: "password" }));
+    try {
+      await dispatch(login({ email: "demo@gmail.com", password: "password" }));
+      navigate("/profile");
+    } catch (error) {
+      if (error.response && error.response.data) {
+        setErrors(error.response.data);
+      }
+    }
   };
 
   const renderErrors = () => {
@@ -65,6 +72,9 @@ const SignupForm = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
             />
+            {errors.email && (
+              <div className="error-message">{errors.email}</div>
+            )}
             <br />
           </div>
 
@@ -76,6 +86,9 @@ const SignupForm = () => {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
             />
+            {errors.username && (
+              <div className="error-message">{errors.username}</div>
+            )}
             <br />
           </div>
 
@@ -88,6 +101,9 @@ const SignupForm = () => {
               placeholder="Password"
             />
             <br />
+            {errors.password && (
+              <div className="error-message">{errors.password}</div>
+            )}
           </div>
 
           <div className="signup-form-input-container">
@@ -99,9 +115,10 @@ const SignupForm = () => {
               placeholder="Confirm Password"
             />
             <br />
+            {errors.password2 && (
+              <div className="error-message">{errors.password2}</div>
+            )}
           </div>
-
-          <div className="signup-form-errors">{renderErrors()}</div>
 
           <button className="signup-form-submit-btn" type="submit">
             Sign Up

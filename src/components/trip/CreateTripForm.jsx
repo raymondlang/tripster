@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createTrip, receiveErrors } from "../../slices/tripSlice";
+import { createTrip } from "../../slices/tripSlice";
 import { useNavigate } from "react-router-dom";
 
 const CreateTripForm = () => {
@@ -24,11 +24,11 @@ const CreateTripForm = () => {
     };
 
     dispatch(createTrip(trip)).then((returnedTrip) => {
-      if (returnedTrip.type === "trip/receiveErrors") {
+      if (returnedTrip && returnedTrip.type === "trips/createTrip/rejected") {
         setErrors(returnedTrip.payload);
         return;
       }
-      navigate(`/trips/${returnedTrip.payload.trip.data._id}`);
+      navigate(`/trips/${returnedTrip.payload._id}`);
     });
   };
 
