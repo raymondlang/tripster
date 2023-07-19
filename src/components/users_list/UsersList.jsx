@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserToTrip, removeUserFromTrip } from "../../slices/userSlice";
+import { addUserToTrip, removeUserFromTrip } from "../../slices/usersSlice";
 
-const UsersList = () => {
-  const tripId = useSelector((state) => Object.keys(state.trips.trip)[0]);
-  const errors = useSelector((state) => state.errors.user);
+const UsersList = ({ tripId }) => {
+  const errors = useSelector((state) => state.users.errors);
   const [email, setEmail] = useState("");
 
   const dispatch = useDispatch();
@@ -32,20 +31,12 @@ const UsersList = () => {
   };
 
   const renderErrors = (errors) => {
-    return <li>{errors}</li>;
+    return Object.keys(errors).map((key) => <li key={key}>{errors[key]}</li>);
   };
 
-  const tripUsers = (users) => {
-    return users.map((user, idx) => (
-      <li className="trip-users-element" key={`user-${idx}`}>
-        <p className="trip-users-text">{user.username}</p>
-        <div className="uninvite-friend">
-          <button onClick={removeFriend(user._id)}>✕</button>
-        </div>
-      </li>
-    ));
-  };
-  const users = Object.values(useSelector((state) => state.newusers));
+  const tripUsers = useSelector(
+    (state) => state.trip.trips.find((trip) => trip._id === tripId)?.users || []
+  );
 
   return (
     <div className="userslist-container">
@@ -53,7 +44,16 @@ const UsersList = () => {
         <header className="userslist-header-element-1">
           <h2>Adventurers</h2>
         </header>
-        <ul className="trip-users-list">{tripUsers(users)}</ul>
+        <ul className="trip-users-list">
+          {tripUsers.map((user, idx) => (
+            <li className="trip-users-element" key={`user-${idx}`}>
+              <p className="trip-users-text">{user.username}</p>
+              <div className="uninvite-friend">
+                <button onClick={removeFriend(user._id)}>✕</button>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className="userslist-invite-users-container">

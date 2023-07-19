@@ -18,20 +18,31 @@ import Comments from "../comments/comments";
 const TripPage = () => {
   const dispatch = useDispatch();
   const { tripId } = useParams();
-  const trip = useSelector((state) => state.trip.new.data.tripName);
-  const users = useSelector((state) => state.trip.new.data.users);
-  const comments = useSelector((state) => state.trip.new.data.comments);
+  const trip = useSelector((state) =>
+    state.trip.trips.find((trip) => trip._id === tripId)
+  );
+  const users = useSelector(
+    (state) => state.trip.trips.find((trip) => trip._id === tripId)?.users
+  );
+  const comments = useSelector(
+    (state) => state.trip.trips.find((trip) => trip._id === tripId)?.comments
+  );
   const itineraryItems = useSelector(
-    (state) => state.trip.new.data.itineraryItems
+    (state) =>
+      state.trip.trips.find((trip) => trip._id === tripId)?.itineraryItems
   );
   const flightItineraryItems = useSelector(
-    (state) => state.trip.new.data.flightItineraryItems
+    (state) =>
+      state.trip.trips.find((trip) => trip._id === tripId)?.flightItineraryItems
   );
   const lodgingItineraryItems = useSelector(
-    (state) => state.trip.new.data.lodgingItineraryItems
+    (state) =>
+      state.trip.trips.find((trip) => trip._id === tripId)
+        ?.lodgingItineraryItems
   );
   const foodItineraryItems = useSelector(
-    (state) => state.trip.new.data.foodItineraryItems
+    (state) =>
+      state.trip.trips.find((trip) => trip._id === tripId)?.foodItineraryItems
   );
 
   useEffect(() => {

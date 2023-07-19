@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createComment } from "../../slices/commentSlice";
+import { useParams } from "react-router-dom";
 
 const CreateComment = () => {
   const currentUser = useSelector((state) => state.session.user);
-  const tripId = useSelector((state) => Object.keys(state.trips.trip)[0]);
+  const { tripId } = useParams();
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
 

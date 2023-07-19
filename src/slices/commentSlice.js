@@ -3,7 +3,7 @@ import * as CommentAPIUtil from "../util/comment_api_util";
 
 const commentSlice = createSlice({
   name: "comments",
-  initialState: {},
+  initialState: [],
   reducers: {
     receiveAllComments: (state, action) => {
       return action.payload.comments;

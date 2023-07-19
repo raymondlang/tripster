@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createItineraryItem } from "../../../slices/intineraryItemSlice";
 import { fetchATrip } from "../../../slices/tripSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateFlightItineraryItem = () => {
   const [itemName, setItemName] = useState("");
@@ -10,9 +10,7 @@ const CreateFlightItineraryItem = () => {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
-  const tripId = useSelector(
-    (state) => Object.keys(state.trip.new.data._id)[0]
-  );
+  const { tripId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Use the useNavigate hook to access the navigation functions
 
