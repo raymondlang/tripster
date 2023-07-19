@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { createItineraryItem } from "../../../slices/intineraryItemSlice";
 import { fetchATrip } from "../../../slices/tripSlice";
 
@@ -10,8 +10,8 @@ const CreateLodgingItineraryItem = () => {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
+  const { tripId } = useParams(); //uses react-router-dom to set tripId
 
-  const tripId = useSelector((state) => Object.keys(state.trips.trip)[0]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

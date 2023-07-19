@@ -45,12 +45,12 @@ const UserTrips = () => {
           </div>
 
           <ul className="users-trip-subcontainer">
+            <Link className="new-trip-btn" to="/trips/create">
+              + Create a new trip
+            </Link>
             {trips.map((trip) => (
               <TripDetails key={trip._id} trip={trip} deleteTrip={deleteTrip} />
             ))}
-            <Link className="new-trip-btn" to="/trips/create">
-              Create a new trip
-            </Link>
           </ul>
 
           <br />

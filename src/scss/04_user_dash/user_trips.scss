@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #222831;
+  background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   margin-bottom: 105px;
 }
@@ -29,6 +29,7 @@
   width: 100%;
   height: 80%;
   margin-top: 105px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   // border:1px solid black;
 }
 
@@ -84,6 +85,7 @@
   display: flex;
   // flex-direction: column;
   justify-content: space-between;
+
   margin: 5px 0;
   width: 90%;
   padding: 30px 20px;
@@ -123,7 +125,7 @@
   }
 
   .edit-trip {
-    margin-right: 20px;
+    margin: 10px;
     font-weight: 500;
     font-size: 14px;
     color: #fff;
@@ -164,12 +166,12 @@
 
   .delete-trip {
     font-size: 14px;
-    /* margin: 10px; */
-    /* margin-left: 20px; */
+    margin: 10px;
+    margin-left: 20px;
     font-weight: 500;
     color: #fff;
     font-family: "Helvetica Neue", sans-serif;
-    background-color: #708bb5;
+    background-color: #f26252;
     padding: 0px 10px;
     border-radius: 10px;
     height: 60px;

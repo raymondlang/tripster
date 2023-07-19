@@ -19,7 +19,7 @@ const ItineraryItem = (props) => {
         </li>
       </ul>
       <br />
-      <CreateItineraryItemContainer />
+      <CreateItineraryItem />
     </div>
   );
 };

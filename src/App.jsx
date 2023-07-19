@@ -9,7 +9,6 @@ import LoginForm from "./components/session/LoginForm";
 import Footer from "./components/nav/footer";
 import TripPage from "./components/trip/TripPage";
 import UserTrips from "./components/user_trips/UserTrips";
-import { AuthRoute, ProtectedRoute } from "./util/route_util";
 import CreateTripForm from "./components/trip/CreateTripForm";
 import { useSelector } from "react-redux";
 import EditTripForm from "./components/trip/EditTripForm";
@@ -34,6 +33,7 @@ const App = () => {
         <Route exact path="trips/create" element={<CreateTripForm />} />
         <Route exact path="/trips/:tripId" element={<TripPage />} />
         <Route exact path="/trips/:tripId/edit" element={<EditTripForm />} />
+        <Route exact path="/profile" element={<UserTrips />} />
       </Routes>
       <Footer />
     </>
