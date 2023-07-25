@@ -72,6 +72,11 @@ const tripsSlice = createSlice({
       })
       .addCase(fetchATrip.fulfilled, (state, action) => {
         state.trip = action.payload;
+        state.errors = null;
+      })
+      .addCase(fetchATrip.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       })
       .addCase(createTrip.fulfilled, (state, action) => {
         state.trip = action.payload;
@@ -81,9 +86,8 @@ const tripsSlice = createSlice({
         state.trip = action.payload;
       })
       .addCase(deleteTrip.fulfilled, (state, action) => {
-        state.trip.trips = state.trip.trips.filter(
-          (trip) => trip._id !== action.payload
-        );
+        const tripIdToDelete = action.payload;
+        state.trips = state.trips.filter((trip) => trip._id !== tripIdToDelete);
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected") && action.error.message,

@@ -15,7 +15,7 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (session.isSignedIn) {
-      history.push("/login");
+      navigate("/login");
     }
   }, [session, history]);
 
@@ -28,11 +28,17 @@ const SignupForm = () => {
       password2,
     };
 
-    dispatch(signup(user, history)).catch((error) => {
-      if (error.response && error.response.data) {
-        setErrors(error.response.data);
-      }
-    });
+    dispatch(signup(user, history))
+      .then(() => {
+        // Signup success, navigate to /profile
+        navigate("/profile");
+      })
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          // Set the errors from the response if any
+          setErrors(error.response.data);
+        }
+      });
   };
 
   const handleDemo = async (e) => {

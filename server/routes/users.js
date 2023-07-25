@@ -12,6 +12,27 @@ import validateLoginInput from "../validation/login.js";
 dotenv.config();
 const router = express.Router();
 
+const checkAuthToken = (req, res, next) => {
+  const token = localStorage.getItem("jwtToken"); // Assuming you store the token as "jwtToken" in local storage
+  if (token) {
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+      if (err) {
+        // Invalid token or token expired, set isAuthenticated to false
+        req.isAuthenticated = false;
+      } else {
+        // Token is valid, set isAuthenticated to true and attach user data to the request
+        req.isAuthenticated = true;
+        req.user = { id: decoded.id, email: decoded.email };
+      }
+      next();
+    });
+  } else {
+    // Token not found in local storage, set isAuthenticated to false
+    req.isAuthenticated = false;
+    next();
+  }
+};
+
 // Current user
 router.get(
   "/current",

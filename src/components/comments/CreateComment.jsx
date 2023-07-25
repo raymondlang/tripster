@@ -7,6 +7,7 @@ const CreateComment = () => {
   const currentUser = useSelector((state) => state.session.user);
   const { tripId } = useParams();
   const [comment, setComment] = useState("");
+  const [isCreatingComment, setIsCreatingComment] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -17,7 +18,12 @@ const CreateComment = () => {
       tripId,
     };
 
-    dispatch(createComment(newComment)).then(() => setComment(""));
+    // Set the loading state to true before dispatching the createComment action
+    setIsCreatingComment(true);
+    dispatch(createComment(newComment))
+      .then(() => setComment(""))
+      .catch((error) => console.error("Error creating comment:", error))
+      .finally(() => setIsCreatingComment(false)); // Set the loading state to false when the createComment action is completed
   };
 
   const handleChange = (e) => {

@@ -22,3 +22,23 @@
 .filler-queen {
   width: 7vh;
 }
+
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.error-message {
+  background-color: #f0eae4; /* Use your preferred soft color */
+  padding: 20px;
+  border: 2px solid #d4bfb4; /* Border color for the error message */
+  border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+  color: black;
+  max-width: 600px;
+  margin: 20px;
+  font-family: sans-serif;
+}

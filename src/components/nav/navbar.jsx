@@ -2,21 +2,24 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../slices/sessionSlice";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const loggedIn = useSelector((state) => state.session.isAuthenticated);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    navigate("/login");
   };
 
   const renderLinks = () => {
     if (loggedIn) {
       return (
         <div className="auth-navbar-container">
-          <Link className="my-trips" to="/user/:user_id">
+          <Link className="my-trips" to="/profile">
             MY PROFILE
           </Link>
           <button className="logout-btn" onClick={handleLogout}>

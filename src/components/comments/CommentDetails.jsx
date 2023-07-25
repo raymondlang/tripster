@@ -13,7 +13,18 @@ const CommentDetails = (props) => {
   }, []);
 
   if (!mounted) {
-    return <div>Loading...</div>;
+    return (
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    );
   }
 
   const deleteButton =
@@ -46,7 +57,7 @@ const CommentDetails = (props) => {
             <br />
           </div>
           <div className="comment-text-body">
-            <p>{props.comment.comment}</p>
+            <p className="comment-text-body">{props.comment.comment}</p>
           </div>
         </section>
 

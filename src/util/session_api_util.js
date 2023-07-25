@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseURL = "http://localhost:3001";
+import apiBaseUrl from "./config";
 
 export const setAuthToken = (token) => {
   if (token) {
@@ -11,10 +10,10 @@ export const setAuthToken = (token) => {
 };
 
 export const signup = (userData) => {
-  return axios.post(`${baseURL}/api/users/register`, userData);
+  return axios.post(`${apiBaseUrl}/api/users/register`, userData);
 };
 
 export const login = (userData) => {
   console.log(userData);
-  return axios.post(`${baseURL}/api/users/login`, userData);
+  return axios.post(`${apiBaseUrl}/api/users/login`, userData);
 };

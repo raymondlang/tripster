@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserToTrip, removeUserFromTrip } from "../../slices/usersSlice";
+import { useParams } from "react-router-dom";
 
 const UsersList = ({ tripId }) => {
   const errors = useSelector((state) => state.users.errors);
   const [email, setEmail] = useState("");
+  console.log(tripId);
 
   const dispatch = useDispatch();
 
@@ -35,7 +37,7 @@ const UsersList = ({ tripId }) => {
   };
 
   const tripUsers = useSelector(
-    (state) => state.trip.trips.find((trip) => trip._id === tripId)?.users || []
+    (state) => state.trip.trips[tripId]?.users || []
   );
 
   return (
@@ -57,9 +59,6 @@ const UsersList = ({ tripId }) => {
       </div>
 
       <div className="userslist-invite-users-container">
-        <div />
-        <ul className="users-list-errors">{renderErrors(errors)}</ul>
-        <div />
         <header className="userslist-header-element-2">
           <h3>Invite friends</h3>
         </header>
@@ -68,9 +67,12 @@ const UsersList = ({ tripId }) => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
+            placeholder="Enter Email"
             className="userslist-input-element"
           />
+          <div />
+          <ul className="users-list-errors">{renderErrors(errors)}</ul>
+          <div />
           <br />
           <button className="invite-button">Send Invite</button>
         </form>

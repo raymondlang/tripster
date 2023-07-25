@@ -20,6 +20,7 @@ import validText from "../validation/validText.js";
 
 const router = express.Router();
 dotenv.config();
+
 // Get the trips for a specific user.
 router.get(
   "/user/:user_id",
@@ -174,20 +175,31 @@ router.delete(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("Trip ID:", req.params.id); // Log the trip ID
     Trip.findById(req.params.id)
       .then((trip) => {
-        if (trip.users.includes(req.user.id)) {
-          trip.remove(() => res.json(trip));
-        } else {
-          // This user isn't authorized to view this trip.
+        if (!trip) {
+          return res
+            .status(404)
+            .json({ notripfound: "This trip doesn't exist" });
+        }
+
+        if (!trip.users.includes(req.user.id)) {
           return res
             .status(401)
             .json({ unauthorized: "You are not authorized" });
         }
+
+        trip
+          .deleteOne()
+          .then(() => {
+            res.json({ message: "Trip deleted successfully", trip });
+          })
+          .catch((err) => {
+            res.status(500).json({ error: "Server error" });
+          });
       })
       .catch((err) => {
-        return res.status(404).json({ notripfound: "This trip doesn't exist" });
+        res.status(500).json({ error: "Server error" });
       });
   }
 );
@@ -223,6 +235,24 @@ router.post(
   }
 );
 
+// Get all comments by tripId
+router.get(
+  "/:trip_id/comments",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // Find all comments for the specified trip
+    console.log(req.params.id);
+    Comment.find({ trip: req.params.trip_id })
+      .sort({ date: 1 }) // Assuming "date" is the field for comment date
+      .then((comments) => res.json(comments))
+      .catch((err) => {
+        return res.status(404).json({
+          nocommentsfound: "No comments found for this trip",
+        });
+      });
+  }
+);
+
 // Delete a comment, and remove it from a trip.
 router.delete(
   "/comments/:id",
@@ -236,7 +266,7 @@ router.delete(
           Trip.findById(comment.trip).then((trip) => {
             trip.comments.pull({ _id: comment.id });
             trip.save().then(() => {
-              comment.remove().then(() => res.json(comment));
+              comment.deleteOne().then(() => res.json(comment));
             });
           });
         } else {

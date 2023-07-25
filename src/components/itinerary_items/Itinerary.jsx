@@ -8,12 +8,12 @@ const Itinerary = (props) => {
     setCurrentTab(parseInt(event.currentTarget.className));
   };
 
-  const header = props.tabs.map((el, idx) => {
+  const header = props.tabs.map((ele, idx) => {
     if (idx === currentTab) {
       return (
         <li onClick={selectedTab} className={idx} key={idx}>
           <div className="current-tab-subcontainer">
-            <h6 className="tabs-container-text">{el.title}</h6>
+            <h6 className="tabs-container-text">{ele.title}</h6>
           </div>
         </li>
       );
@@ -21,7 +21,7 @@ const Itinerary = (props) => {
       return (
         <li onClick={selectedTab} className={idx} key={idx}>
           <div className="tab-subcontainer">
-            <h6 className="tabs-container-text">{el.title}</h6>
+            <h6 className="tabs-container-text">{ele.title}</h6>
           </div>
         </li>
       );

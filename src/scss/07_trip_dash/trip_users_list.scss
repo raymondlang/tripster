@@ -117,7 +117,7 @@ ul.trip-users-list > li:hover {
   background: #1a1e25;
   color: white;
   font-family: "Helvetica Neue", sans-serif;
-  border: 1px solid lightgrey;
+  border: 1px solid black;
   outline: none;
   height: 24px;
   width: 91%;
@@ -132,14 +132,16 @@ ul.trip-users-list > li:hover {
 }
 
 ul.users-list-errors {
-  width: 168px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   font-family: "Helvetica Neue", sans-serif;
   text-align: center;
 }
 
 button.invite-button {
-  background: #1a1e25;
-  color: white;
+  background: #74f5a8;
+  color: rgb(60, 49, 49);
   font-family: "Helvetica Neue", sans-serif;
   border: 1px solid lightgrey;
   outline: none;

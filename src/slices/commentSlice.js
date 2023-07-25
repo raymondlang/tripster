@@ -1,56 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as CommentAPIUtil from "../util/comment_api_util";
 
-const commentSlice = createSlice({
-  name: "comments",
-  initialState: [],
-  reducers: {
-    receiveAllComments: (state, action) => {
-      return action.payload.comments;
-    },
-    receiveComment: (state, action) => {
-      state[action.payload.comment._id] = action.payload.comment;
-    },
-    receiveNewComment: (state, action) => {
-      state[action.payload.comment._id] = action.payload.comment;
-    },
-    // receiveErrors: (state, action) => {
-    //   // Handle errors if needed
-    // },
-    removeComment: (state, action) => {
-      delete state[action.payload.commentId];
-    },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllComments.fulfilled, (state, action) => {
-        return action.payload.reduce((result, comment) => {
-          result[comment._id] = comment;
-          return result;
-        }, {});
-      })
-      .addCase(fetchComment.fulfilled, (state, action) => {
-        state[action.payload.comment._id] = action.payload.comment;
-      })
-      .addCase(createComment.fulfilled, (state, action) => {
-        state[action.payload.comment._id] = action.payload.comment;
-      })
-      .addCase(updateComment.fulfilled, (state, action) => {
-        state[action.payload.comment._id] = action.payload.comment;
-      })
-      .addCase(deleteComment.fulfilled, (state, action) => {
-        delete state[action.payload];
-      });
-  },
-});
-
 export const fetchAllComments = createAsyncThunk(
   "comments/fetchAllComments",
-  async (_, { rejectWithValue }) => {
+  async (tripId, { rejectWithValue }) => {
     try {
-      const comments = await CommentAPIUtil.fetchAllComments();
+      const comments = await CommentAPIUtil.fetchAllComments(tripId);
       return comments;
     } catch (error) {
+      console.log("hello");
       return rejectWithValue(error.message);
     }
   }
@@ -103,6 +61,58 @@ export const deleteComment = createAsyncThunk(
     }
   }
 );
+
+const commentSlice = createSlice({
+  name: "comments",
+  initialState: {},
+  reducers: {
+    receiveAllComments: (state, action) => {
+      return action.payload.comments;
+    },
+    receiveComment: (state, action) => {
+      state[action.payload.comment._id] = action.payload.comment;
+    },
+    receiveNewComment: (state, action) => {
+      state[action.payload.comment._id] = action.payload.comment;
+    },
+    // receiveErrors: (state, action) => {
+    //   // Handle errors if needed
+    // },
+    removeComment: (state, action) => {
+      delete state[action.payload.commentId];
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAllComments.fulfilled, (state, action) => {
+        console.log(action.payload);
+        const commentsArray = action.payload.data; // The payload is already an array of comments
+        return commentsArray.reduce((result, comment) => {
+          result[comment._id] = comment;
+          return result;
+        }, {});
+      })
+      .addCase(fetchComment.fulfilled, (state, action) => {
+        state[action.payload.comment._id] = action.payload.comment;
+      })
+      .addCase(createComment.pending, (state) => {
+        state.isCreatingComment = true;
+      })
+      .addCase(createComment.fulfilled, (state, action) => {
+        state[action.payload.comment._id] = action.payload.comment;
+        state.isCreatingComment = false;
+      })
+      .addCase(createComment.rejected, (state) => {
+        state.isCreatingComment = false;
+      })
+      .addCase(updateComment.fulfilled, (state, action) => {
+        state[action.payload.comment._id] = action.payload.comment;
+      })
+      .addCase(deleteComment.fulfilled, (state, action) => {
+        delete state[action.payload];
+      });
+  },
+});
 
 export const {
   receiveAllComments,

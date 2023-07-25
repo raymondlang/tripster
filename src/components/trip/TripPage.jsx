@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchATrip } from "../../slices/tripSlice";
 import { deleteItem } from "../../slices/intineraryItemSlice";
@@ -18,40 +18,76 @@ import Comments from "../comments/comments";
 const TripPage = () => {
   const dispatch = useDispatch();
   const { tripId } = useParams();
+  const [currentTab, setCurrentTab] = useState("flights");
+
+  const selectTripProperty = (property) => {
+    return trip?.[property] ?? null;
+  };
+
   const trip = useSelector((state) =>
     state.trip.trips.find((trip) => trip._id === tripId)
   );
-  const users = useSelector(
-    (state) => state.trip.trips.find((trip) => trip._id === tripId)?.users
+  const users = useSelector((state) => selectTripProperty("users"));
+  const comments = useSelector((state) => selectTripProperty("comments"));
+  const itineraryItems = useSelector((state) =>
+    selectTripProperty("itineraryItems")
   );
-  const comments = useSelector(
-    (state) => state.trip.trips.find((trip) => trip._id === tripId)?.comments
+  const flightItineraryItems = useSelector((state) =>
+    selectTripProperty("flightItineraryItems")
   );
-  const itineraryItems = useSelector(
-    (state) =>
-      state.trip.trips.find((trip) => trip._id === tripId)?.itineraryItems
+  const lodgingItineraryItems = useSelector((state) =>
+    selectTripProperty("lodgingItineraryItems")
   );
-  const flightItineraryItems = useSelector(
-    (state) =>
-      state.trip.trips.find((trip) => trip._id === tripId)?.flightItineraryItems
+  const foodItineraryItems = useSelector((state) =>
+    selectTripProperty("foodItineraryItems")
   );
-  const lodgingItineraryItems = useSelector(
-    (state) =>
-      state.trip.trips.find((trip) => trip._id === tripId)
-        ?.lodgingItineraryItems
-  );
-  const foodItineraryItems = useSelector(
-    (state) =>
-      state.trip.trips.find((trip) => trip._id === tripId)?.foodItineraryItems
-  );
+  const error = useSelector((state) => state.trip.errors);
 
   useEffect(() => {
     dispatch(fetchATrip(tripId));
   }, [dispatch, tripId]);
 
+  const createFlightItemAction = (item) => {
+    dispatch(createFlightItineraryItem(item));
+  };
+
+  const createLodgingItemAction = (item) => {
+    dispatch(createLodgingItineraryItem(item));
+  };
+
+  const createFoodItemAction = (item) => {
+    dispatch(createFoodItineraryItem(item));
+  };
+
+  const createOtherItemAction = (item) => {
+    dispatch(createOtherItineraryItem(item));
+  };
+
   if (!trip) {
-    return <div>Loading Trip...</div>;
+    return (
+      <div className="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    );
   }
+
+  // if (error === "Unauthorized") {
+  //   return (
+  //     <div className="error-container">
+  //       <div className="error-message">
+  //         Sorry, you are not authorized to view this trip. Please check your
+  //         permissions.
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   const tabArr = [
     {
@@ -113,7 +149,14 @@ const TripPage = () => {
             <br />
           </header>
           <div className="trip-items-subcontainer">
-            <Itinerary tripId={tripId} tabs={tabArr} />
+            <Itinerary
+              tripId={tripId}
+              tabs={tabArr}
+              createFlightItemAction={createFlightItemAction}
+              createLodgingItemAction={createLodgingItemAction}
+              createFoodItemAction={createFoodItemAction}
+              createOtherItemAction={createOtherItemAction}
+            />
           </div>
         </div>
         <div className="filler-queen"></div>
