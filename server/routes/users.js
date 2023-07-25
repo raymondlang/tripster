@@ -13,7 +13,7 @@ dotenv.config();
 const router = express.Router();
 
 const checkAuthToken = (req, res, next) => {
-  const token = localStorage.getItem("jwtToken"); // Assuming you store the token as "jwtToken" in local storage
+  const token = req.headers.authorization || localStorage.getItem("jwtToken");
   if (token) {
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
@@ -36,7 +36,8 @@ const checkAuthToken = (req, res, next) => {
 // Current user
 router.get(
   "/current",
-  passport.authenticate("jwt", { session: false }),
+  checkAuthToken,
+  // passport.authenticate("jwt", { session: false }),
   (req, res) => {
     res.json({
       id: req.user.id,

@@ -67,35 +67,58 @@
 .comment-list {
   display: flex;
   margin-bottom: 10px;
-}
+  overflow-y: auto;
+  overflow-wrap: break-word;
 
-.message-bubble-1 {
-  background: #ace3e0;
-  border-radius: 30px;
-  padding: 10px;
-  margin-left: 289px;
+  // Media query for smaller screens
+  @media screen and (max-width: 768px) {
+    max-height: 150px; /* Adjust the height as needed */
+    font-size: 14px; /* Adjust the font size for smaller screens */
+  }
 
-  width: 270px;
+  // Media query for even smaller screens
+  @media screen and (max-width: 480px) {
+    max-height: 100px; /* Adjust the height as needed */
+    font-size: 12px; /* Adjust the font size for even smaller screens */
+  }
 
-  font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
-  line-height: 14px;
-  text-align: center;
-  color: #000;
+  .message-bubble-1 {
+    background: #ace3e0;
+    border-radius: 30px;
+    padding: 10px;
+    margin-left: 289px;
+    width: 270px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px;
+    line-height: 14px;
+    text-align: center;
+    color: #000;
+    position: relative;
+    overflow-y: auto;
+    overflow-wrap: break-word;
 
-  position: relative;
-}
+    // Media query for smaller screens
+    @media screen and (max-width: 768px) {
+      max-height: 150px; /* Adjust the height as needed */
+      font-size: 14px; /* Adjust the font size for smaller screens */
+    }
 
-.message-bubble-1:before {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 68%;
-  border-top: 22px solid #ace3e0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-}
+    // Media query for even smaller screens
+    @media screen and (max-width: 480px) {
+      max-height: 100px; /* Adjust the height as needed */
+      font-size: 12px; /* Adjust the font size for even smaller screens */
+    }
 
+    &:before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 68%;
+      border-top: 22px solid #ace3e0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+    }
+  }
 .message-bubble-2 {
   background: white;
   border-radius: 30px;
@@ -110,6 +133,19 @@
   color: #000;
 
   position: relative;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+  /* Media query for smaller screens */
+  @media screen and (max-width: 768px) {
+    max-height: 150px; /* Adjust the height as needed */
+    font-size: 14px; /* Adjust the font size for smaller screens */
+  }
+
+  /* Media query for even smaller screens */
+  @media screen and (max-width: 480px) {
+    max-height: 100px; /* Adjust the height as needed */
+    font-size: 12px; /* Adjust the font size for even smaller screens */
+  }
 }
 
 .message-bubble-2:before {
