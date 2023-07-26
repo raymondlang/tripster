@@ -10,7 +10,6 @@ import FlightItineraryItem from "../itinerary_items/flight/FlightItineraryItem";
 import LodgingItineraryItem from "../itinerary_items/lodging/LodgingItineraryItem";
 import ItineraryItem from "../itinerary_items/ItineraryItem";
 import FoodItineraryItem from "../itinerary_items/food/FoodItineraryItem";
-// import Map from "../map/map";
 import { useParams } from "react-router-dom";
 import UsersList from "../users_list/UsersList";
 import Comments from "../comments/comments";
@@ -18,7 +17,7 @@ import Comments from "../comments/comments";
 const TripPage = () => {
   const dispatch = useDispatch();
   const { tripId } = useParams();
-  const [currentTab, setCurrentTab] = useState("flights");
+  // const [currentTab, setCurrentTab] = useState("flights");
 
   const selectTripProperty = (property) => {
     return trip?.[property] ?? null;
@@ -28,18 +27,21 @@ const TripPage = () => {
     state.trip.trips.find((trip) => trip._id === tripId)
   );
   const users = useSelector((state) => selectTripProperty("users"));
-  const comments = useSelector((state) => selectTripProperty("comments"));
+
   const itineraryItems = useSelector((state) =>
-    selectTripProperty("itineraryItems")
+    Object.values(state.trip.trip[tripId].itineraryItems)
   );
+
+  console.log(itineraryItems);
+
   const flightItineraryItems = useSelector((state) =>
-    selectTripProperty("flightItineraryItems")
+    Object.values(state.trip.trip[tripId].flightItineraryItems)
   );
   const lodgingItineraryItems = useSelector((state) =>
-    selectTripProperty("lodgingItineraryItems")
+    Object.values(state.trip.trip[tripId].lodgingItineraryItems)
   );
   const foodItineraryItems = useSelector((state) =>
-    selectTripProperty("foodItineraryItems")
+    Object.values(state.trip.trip[tripId].foodItineraryItems)
   );
   const error = useSelector((state) => state.trip.errors);
 
@@ -95,7 +97,7 @@ const TripPage = () => {
       content: (
         <FlightItineraryItem
           tripId={tripId}
-          flightItineraryItems={Object.values(flightItineraryItems)}
+          flightItineraryItems={flightItineraryItems}
           deleteFlightItem={deleteFlightItem}
         />
       ),
@@ -105,7 +107,7 @@ const TripPage = () => {
       content: (
         <LodgingItineraryItem
           tripId={tripId}
-          lodgingItineraryItems={Object.values(lodgingItineraryItems)}
+          lodgingItineraryItems={lodgingItineraryItems}
           deleteLodgingItem={deleteLodgingItem}
         />
       ),
@@ -115,7 +117,7 @@ const TripPage = () => {
       content: (
         <FoodItineraryItem
           tripId={tripId}
-          foodItineraryItems={Object.values(foodItineraryItems)}
+          foodItineraryItems={foodItineraryItems}
           deleteFoodItem={deleteFoodItem}
         />
       ),
@@ -125,7 +127,7 @@ const TripPage = () => {
       content: (
         <ItineraryItem
           tripId={tripId}
-          itineraryItems={Object.values(itineraryItems)}
+          itineraryItems={itineraryItems}
           deleteItem={deleteItem}
         />
       ),
@@ -137,11 +139,11 @@ const TripPage = () => {
       <div className="trip-page-subcontainer">
         <div className="trip-sidebar-container">
           <div className="trip-sidebar-container-elements">
-            <UsersList users={trip.users} newusers={users} tripId={tripId} />
+            <UsersList users={trip.users} newusers={users} tripId={trip._id} />
           </div>
         </div>
         <div className="trip-chat-container">
-          <Comments tripId={trip._id} comments={Object.values(comments)} />
+          <Comments tripId={trip._id} />
         </div>
         <div className="trip-items-container">
           <header className="trip-items-header">

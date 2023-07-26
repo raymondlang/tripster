@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   createItineraryItem,
   // clearErrors,
@@ -11,17 +10,14 @@ const CreateItineraryItem = () => {
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
-
-  const errors = useSelector(selectItineraryItemErrors);
-
+  // const errors = useSelector(selectItineraryItemErrors);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    return () => {
-      dispatch(clearErrors());
-    };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(clearErrors());
+  //   };
+  // }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,7 +32,6 @@ const CreateItineraryItem = () => {
       setCategory("");
       setAddress("");
       setDescription("");
-      navigate("/"); // Redirect to the desired page after form submission
     });
   };
 

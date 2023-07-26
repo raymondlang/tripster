@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 import * as APIUtil from "../util/session_api_util";
 
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: localStorage.getItem("token") ? true : false,
   user: {},
 };
 

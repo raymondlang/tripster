@@ -6,11 +6,9 @@ import {
   createComment,
 } from "../../slices/commentSlice";
 import CreateComment from "./CreateComment";
-import { useParams } from "react-router-dom";
 
-const Comments = () => {
+const Comments = ({ tripId }) => {
   const dispatch = useDispatch();
-  const { tripId } = useParams();
   const currentUser = useSelector((state) => state.session.user);
   const comments = useSelector((state) => Object.values(state.comments));
 
@@ -23,7 +21,6 @@ const Comments = () => {
   }, [dispatch, tripId]);
 
   useEffect(() => {
-    // Scroll to the bottom whenever the comments change
     scrollToBottom();
   }, [comments]);
 
@@ -32,13 +29,6 @@ const Comments = () => {
       mRef.current.scrollIntoView({ block: "end" });
     }
   };
-
-  console.log("Comments array:", comments);
-
-  // const handleCreateComment = (newComment) => {
-  //   // Dispatch the createComment action here directly in the Comments component
-  //   dispatch(createComment(newComment));
-  // };
 
   const handleDeleteComment = (commentId) => {
     dispatch(deleteComment(commentId));
@@ -49,7 +39,6 @@ const Comments = () => {
   // }
 
   const commentsList = comments.map((comment, idx) => {
-    // Check if comment or comment.author is undefined or null before accessing properties
     if (!comment || !comment.author) {
       return null; // Return null for invalid comments
     }
@@ -104,7 +93,7 @@ const Comments = () => {
       <div className="comments-subcontainer-anchor"></div>
 
       <div className="create-comment-container">
-        <CreateComment createComment={createComment} />
+        <CreateComment createComment={createComment} tripId={tripId} />
       </div>
     </div>
   );

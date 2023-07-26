@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createItineraryItem } from "../../../slices/intineraryItemSlice";
 import { fetchATrip } from "../../../slices/tripSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const CreateFlightItineraryItem = () => {
+const CreateFlightItineraryItem = ({ tripId }) => {
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
-  const { tripId } = useParams();
+
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Use the useNavigate hook to access the navigation functions
 
   const handleChange = (field) => (e) => {
     const value = e.target.value;
@@ -49,7 +48,6 @@ const CreateFlightItineraryItem = () => {
       setAddress("");
       setDescription("");
       setErrors({});
-      navigate("/"); // Use the navigate function to redirect to a different route
     });
   };
 
