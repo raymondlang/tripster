@@ -1,25 +1,24 @@
 import ItineraryItemDetails from "./ItineraryItemDetails";
 import CreateItineraryItem from "./CreateItineraryItem";
 
-const ItineraryItem = (props) => {
-  const itemsList = props.itineraryItems.map((item, idx) => (
+const ItineraryItem = ({ itineraryItems, deleteItem, tripId }) => {
+  const itemsList = itineraryItems.map((item, idx) => (
     <ItineraryItemDetails
       key={`item-${idx}`}
       item={item}
-      deleteItem={props.deleteItem}
+      deleteItem={deleteItem}
     />
   ));
 
   return (
     <div>
-      <ul>
-        <li className="items-container">
-          {itemsList}
-          <br />
-        </li>
-      </ul>
+      <li className="items-container">
+        {itemsList}
+        <br />
+      </li>
+
       <br />
-      <CreateItineraryItem />
+      <CreateItineraryItem tripId={tripId} />
     </div>
   );
 };

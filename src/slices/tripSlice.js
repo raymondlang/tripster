@@ -99,3 +99,6 @@ const tripsSlice = createSlice({
 });
 
 export default tripsSlice.reducer;
+
+export const selectTripById = (state, tripId) =>
+  state.trip.trips.find((trip) => trip._id === tripId);

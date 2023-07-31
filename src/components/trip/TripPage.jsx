@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchATrip } from "../../slices/tripSlice";
+import { fetchATrip, selectTripById } from "../../slices/tripSlice";
 import { deleteItem } from "../../slices/intineraryItemSlice";
 import { deleteFlightItem } from "../../slices/flightItineraryItemSlice";
 import { deleteLodgingItem } from "../../slices/lodgingItineraryItemSlice";
@@ -17,31 +17,23 @@ import Comments from "../comments/comments";
 const TripPage = () => {
   const dispatch = useDispatch();
   const { tripId } = useParams();
-  // const [currentTab, setCurrentTab] = useState("flights");
+  const [currentTab, setCurrentTab] = useState("flights");
+  const trip = useSelector((state) => selectTripById(state, tripId));
 
-  const selectTripProperty = (property) => {
-    return trip?.[property] ?? null;
-  };
-
-  const trip = useSelector((state) =>
-    state.trip.trips.find((trip) => trip._id === tripId)
-  );
-  const users = useSelector((state) => selectTripProperty("users"));
+  // const users = useSelector((state) => trip.users);
 
   const itineraryItems = useSelector((state) =>
-    Object.values(state.trip.trip[tripId].itineraryItems)
+    Object.values(trip.itineraryItems ?? {})
   );
-
-  console.log(itineraryItems);
 
   const flightItineraryItems = useSelector((state) =>
-    Object.values(state.trip.trip[tripId].flightItineraryItems)
+    Object.values(trip.flightItineraryItems)
   );
   const lodgingItineraryItems = useSelector((state) =>
-    Object.values(state.trip.trip[tripId].lodgingItineraryItems)
+    Object.values(trip.lodgingItineraryItems)
   );
   const foodItineraryItems = useSelector((state) =>
-    Object.values(state.trip.trip[tripId].foodItineraryItems)
+    Object.values(trip.foodItineraryItems)
   );
   const error = useSelector((state) => state.trip.errors);
 
@@ -139,7 +131,7 @@ const TripPage = () => {
       <div className="trip-page-subcontainer">
         <div className="trip-sidebar-container">
           <div className="trip-sidebar-container-elements">
-            <UsersList users={trip.users} newusers={users} tripId={trip._id} />
+            <UsersList tripId={trip._id} />
           </div>
         </div>
         <div className="trip-chat-container">

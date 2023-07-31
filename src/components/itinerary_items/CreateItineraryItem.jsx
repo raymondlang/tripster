@@ -1,11 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createItineraryItem,
-  // clearErrors,
-} from "../../slices/intineraryItemSlice";
+import { createItineraryItem } from "../../slices/intineraryItemSlice";
 
-const CreateItineraryItem = () => {
+const CreateItineraryItem = ({ tripId }) => {
   const [itemName, setItemName] = useState("");
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
@@ -26,6 +23,7 @@ const CreateItineraryItem = () => {
       category,
       address,
       description,
+      tripId,
     };
     dispatch(createItineraryItem(item)).then(() => {
       setItemName("");

@@ -1,14 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUserToTrip, removeUserFromTrip } from "../../slices/usersSlice";
-import { useParams } from "react-router-dom";
+import {
+  addUserToTrip,
+  removeUserFromTrip,
+  getUsersForTrip,
+} from "../../slices/usersSlice";
 
 const UsersList = ({ tripId }) => {
   const errors = useSelector((state) => state.users.errors);
+  // const trip = useSelector((state) => selectTripById(state, tripId));
   const [email, setEmail] = useState("");
-  console.log(tripId);
-
   const dispatch = useDispatch();
+  const users = useSelector((state) => Object.values(state.users));
+
+  useEffect(() => {
+    dispatch(getUsersForTrip(tripId)).catch((error) => {
+      console.error("Error fetching users:", error);
+    });
+  }, [dispatch, tripId]);
+
+  // const tripUsers = useSelector((state) => {
+  //   const trip = state.trip.trips[tripId];
+  //   return trip?.users ? Object.values(trip.users) : [];
+  // });
 
   const addFriend = (e) => {
     e.preventDefault();
@@ -36,10 +50,6 @@ const UsersList = ({ tripId }) => {
     return Object.keys(errors).map((key) => <li key={key}>{errors[key]}</li>);
   };
 
-  const tripUsers = useSelector(
-    (state) => state.trip.trips[tripId]?.users || []
-  );
-
   return (
     <div className="userslist-container">
       <div className="userslist-users-container">
@@ -47,7 +57,7 @@ const UsersList = ({ tripId }) => {
           <h2>Adventurers</h2>
         </header>
         <ul className="trip-users-list">
-          {tripUsers.map((user, idx) => (
+          {users.map((user, idx) => (
             <li className="trip-users-element" key={`user-${idx}`}>
               <p className="trip-users-text">{user.username}</p>
               <div className="uninvite-friend">

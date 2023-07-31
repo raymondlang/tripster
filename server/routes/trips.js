@@ -241,13 +241,33 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     // Find all comments for the specified trip
-    console.log(req.params.id);
     Comment.find({ trip: req.params.trip_id })
       .sort({ date: 1 }) // Assuming "date" is the field for comment date
       .then((comments) => res.json(comments))
       .catch((err) => {
         return res.status(404).json({
           nocommentsfound: "No comments found for this trip",
+        });
+      });
+  }
+);
+
+// Get all users by tripId
+router.get(
+  "/:trip_id/users",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Trip.findById(req.params.trip_id)
+      .populate("users", ["_id", "firstName", "lastName", "email"]) // Specify the fields you want to include
+      .then((trip) => {
+        if (!trip) {
+          return res.status(404).json({ notripfound: "Trip not found" });
+        }
+        res.json(trip.users);
+      })
+      .catch((err) => {
+        return res.status(404).json({
+          nocommentsfound: "No users found for this trip",
         });
       });
   }
@@ -542,6 +562,7 @@ router.post(
           }
 
           User.findOne({ email: req.body.email }).then((user) => {
+            console.log(req.body.email);
             if (!user) {
               return res.status(401).json("User doesn't exist");
             }

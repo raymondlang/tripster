@@ -14,6 +14,7 @@ export const fetchItineraryItem = (itemId) => {
 };
 
 export const createItineraryItem = (data) => {
+  console.log(data);
   return axios
     .post(`${apiBaseUrl}/api/trips/${data.tripId}/itineraryItem`, data)
     .then((response) => response.data);

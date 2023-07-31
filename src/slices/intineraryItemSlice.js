@@ -21,7 +21,8 @@ const itemsSlice = createSlice({
         state.items[action.payload._id] = action.payload;
       })
       .addCase(createItineraryItem.fulfilled, (state, action) => {
-        state.items[action.payload._id] = action.payload;
+        console.log(action);
+        state.items[action.payload.item._id] = action.payload;
       })
       .addCase(deleteItem.fulfilled, (state, action) => {
         delete state.items[action.payload];
