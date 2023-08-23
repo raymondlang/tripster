@@ -258,16 +258,17 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Trip.findById(req.params.trip_id)
-      .populate("users", ["_id", "firstName", "lastName", "email"]) // Specify the fields you want to include
+      .populate("users", ["_id", "username", "email"])
       .then((trip) => {
         if (!trip) {
           return res.status(404).json({ notripfound: "Trip not found" });
         }
         res.json(trip.users);
+        console.log(trip.users);
       })
       .catch((err) => {
         return res.status(404).json({
-          nocommentsfound: "No users found for this trip",
+          Error: "No users found for this trip",
         });
       });
   }
@@ -347,7 +348,7 @@ router.delete(
           const trip = itineraryItem.trip;
           trip.itineraryItems.pull({ _id: itineraryItem.id });
           trip.save().then(() => {
-            itineraryItem.remove().then(() => res.json(itineraryItem));
+            itineraryItem.deleteOne().then(() => res.json(itineraryItem));
           });
         } else {
           return res.status(401).json("Not the owner");
@@ -408,7 +409,7 @@ router.delete(
           trip.flightItineraryItems.pull({ _id: flightItineraryItem.id });
           trip.save().then(() => {
             flightItineraryItem
-              .remove()
+              .deleteOne()
               .then(() => res.json(flightItineraryItem));
           });
         } else {
@@ -470,7 +471,7 @@ router.delete(
           trip.lodgingItineraryItems.pull({ _id: lodgingItineraryItem.id });
           trip.save().then(() => {
             lodgingItineraryItem
-              .remove()
+              .deleteOne()
               .then(() => res.json(lodgingItineraryItem));
           });
         } else {
@@ -531,7 +532,9 @@ router.delete(
           const trip = foodItineraryItem.trip;
           trip.foodItineraryItems.pull({ _id: foodItineraryItem.id });
           trip.save().then(() => {
-            foodItineraryItem.remove().then(() => res.json(foodItineraryItem));
+            foodItineraryItem
+              .deleteOne()
+              .then(() => res.json(foodItineraryItem));
           });
         } else {
           return res.status(401).json("Not the owner");

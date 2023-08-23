@@ -8,21 +8,15 @@ import {
 
 const UsersList = ({ tripId }) => {
   const errors = useSelector((state) => state.users.errors);
-  // const trip = useSelector((state) => selectTripById(state, tripId));
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
-  const users = useSelector((state) => Object.values(state.users));
+  const users = useSelector((state) => state.users.users);
 
   useEffect(() => {
     dispatch(getUsersForTrip(tripId)).catch((error) => {
       console.error("Error fetching users:", error);
     });
   }, [dispatch, tripId]);
-
-  // const tripUsers = useSelector((state) => {
-  //   const trip = state.trip.trips[tripId];
-  //   return trip?.users ? Object.values(trip.users) : [];
-  // });
 
   const addFriend = (e) => {
     e.preventDefault();
@@ -57,8 +51,8 @@ const UsersList = ({ tripId }) => {
           <h2>Adventurers</h2>
         </header>
         <ul className="trip-users-list">
-          {users.map((user, idx) => (
-            <li className="trip-users-element" key={`user-${idx}`}>
+          {users.map((user) => (
+            <li className="trip-users-element" key={user._id}>
               <p className="trip-users-text">{user.username}</p>
               <div className="uninvite-friend">
                 <button onClick={removeFriend(user._id)}>✕</button>

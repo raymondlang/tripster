@@ -1,7 +1,17 @@
 import ItineraryItemDetails from "./ItineraryItemDetails";
 import CreateItineraryItem from "./CreateItineraryItem";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { selectTripById } from "../../slices/tripSlice";
 
-const ItineraryItem = ({ itineraryItems, deleteItem, tripId }) => {
+const ItineraryItem = ({ deleteItem, tripId }) => {
+  // const trip = useSelector((state) => selectTripById(state, tripId));
+  // const trip = useSelector((state) => state.trip.trip.tripId.itineraryItems);
+  const itineraryItems = useSelector((state) =>
+    Object.values(state.trip.trip[tripId].itineraryItems)
+  );
+
+  console.log(useSelector((state) => state.trip.trip[tripId].itineraryItems));
+
   const itemsList = itineraryItems.map((item, idx) => (
     <ItineraryItemDetails
       key={`item-${idx}`}
@@ -12,10 +22,10 @@ const ItineraryItem = ({ itineraryItems, deleteItem, tripId }) => {
 
   return (
     <div>
-      <li className="items-container">
+      <ul className="items-container">
         {itemsList}
         <br />
-      </li>
+      </ul>
 
       <br />
       <CreateItineraryItem tripId={tripId} />

@@ -6,9 +6,9 @@ export const getUsersForTrip = createAsyncThunk(
   async (tripId, { rejectWithValue }) => {
     try {
       const users = await UsersAPIUtil.fetchUsersForTrip(tripId);
-      return users;
+      return users.data; // Return the array of users
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response.data); // Return the error response data
     }
   }
 );
@@ -41,28 +41,32 @@ export const removeUserFromTrip = createAsyncThunk(
 const usersSlice = createSlice({
   name: "users",
   initialState: {
-    users: {}, // Storing users as an object with user IDs as keys and user objects as values
+    users: [], // Storing users as an object with user IDs as keys and user objects as values
     errors: {},
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getUsersForTrip.fulfilled, (state, action) => {
-        // Store the fetched users in the users slice
-        const usersArray = action.payload.data;
-        const userIds = usersArray.map((user) => user._id);
-        console.log(userIds);
+        console.log(action.payload);
+        const uniqueUsers = new Set(action.payload.map((user) => user._id));
+        // Convert the Set back to an array of users
+        state.users = Array.from(uniqueUsers).map((userId) =>
+          action.payload.find((user) => user._id === userId)
+        );
         state.errors = {};
       })
       .addCase(getUsersForTrip.rejected, (state, action) => {
         state.errors = action.payload;
       })
       .addCase(addUserToTrip.fulfilled, (state, action) => {
-        state.users[action.payload._id] = action.payload;
+        state.users.push(action.payload); // Push the new user object to the array
         state.errors = {};
       })
       .addCase(removeUserFromTrip.fulfilled, (state, action) => {
-        state.users[action.payload._id] = action.payload;
+        state.users = state.users.filter(
+          (user) => user._id !== action.payload._id
+        );
         state.errors = {};
       })
       .addCase(addUserToTrip.rejected, (state, action) => {

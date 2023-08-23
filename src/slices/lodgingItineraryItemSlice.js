@@ -55,9 +55,13 @@ export const fetchLodgingItineraryItem = createAsyncThunk(
 
 export const createLodgingItineraryItem = createAsyncThunk(
   "lodgingItineraryItems/create",
-  async (data) => {
-    const response = await ItemAPIUtil.createItineraryItem(data);
-    return response.data;
+  async (item, { rejectWithValue }) => {
+    try {
+      const response = await ItemAPIUtil.createItineraryItem(item);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 

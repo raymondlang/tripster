@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createItineraryItem } from "../../../slices/intineraryItemSlice";
+import { createFlightItineraryItem } from "../../../slices/flightItineraryItemSlice";
 import { fetchATrip } from "../../../slices/tripSlice";
-import { useParams } from "react-router-dom";
 
 const CreateFlightItineraryItem = ({ tripId }) => {
   const [itemName, setItemName] = useState("");
@@ -42,12 +41,11 @@ const CreateFlightItineraryItem = ({ tripId }) => {
       description,
       tripId,
     };
-    dispatch(createItineraryItem(item)).then(() => {
+    dispatch(createFlightItineraryItem(item)).then(() => {
       setItemName("");
       setCategory("");
       setAddress("");
       setDescription("");
-      setErrors({});
     });
   };
 

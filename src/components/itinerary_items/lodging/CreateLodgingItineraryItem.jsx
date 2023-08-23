@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { createItineraryItem } from "../../../slices/intineraryItemSlice";
+import { createLodgingItineraryItem } from "../../../slices/lodgingItineraryItemSlice";
 import { fetchATrip } from "../../../slices/tripSlice";
 
 const CreateLodgingItineraryItem = () => {
@@ -28,14 +28,13 @@ const CreateLodgingItineraryItem = () => {
       description,
       tripId,
     };
-    dispatch(createItineraryItem(item))
+    dispatch(createLodgingItineraryItem(item))
       .then((item) => {
         setItemName("");
         setCategory("");
         setAddress("");
         setDescription("");
         setErrors({});
-        navigate("/"); // Redirect to the desired page after form submission
       })
       .catch((err) => {
         if (err.response && err.response.data) {

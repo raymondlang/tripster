@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { createItineraryItem } from "../../../slices/intineraryItemSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { createFoodItineraryItem } from "../../../slices/foodItineraryItemSlice";
 
 const CreateFoodItineraryItem = ({ tripId }) => {
   const [itemName, setItemName] = useState("");
@@ -34,7 +34,7 @@ const CreateFoodItineraryItem = ({ tripId }) => {
       description,
       tripId,
     };
-    dispatch(createItineraryItem(item)).then((item) => {
+    dispatch(createFoodItineraryItem(item)).then((item) => {
       setItemName("");
       setCategory("");
       setAddress("");
