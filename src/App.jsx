@@ -15,7 +15,6 @@ import EditTripForm from "./components/trip/EditTripForm";
 
 const App = () => {
   const isLoggedIn = useSelector((state) => state.session.isAuthenticated);
-  console.log(isLoggedIn);
 
   return (
     <>

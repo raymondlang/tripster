@@ -8,7 +8,6 @@ export const fetchAllComments = createAsyncThunk(
       const comments = await CommentAPIUtil.fetchAllComments(tripId);
       return comments;
     } catch (error) {
-      console.log("hello");
       return rejectWithValue(error.message);
     }
   }
@@ -85,7 +84,6 @@ const commentSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllComments.fulfilled, (state, action) => {
-        console.log(action.payload);
         const commentsArray = action.payload.data; // The payload is already an array of comments
         return commentsArray.reduce((result, comment) => {
           result[comment._id] = comment;

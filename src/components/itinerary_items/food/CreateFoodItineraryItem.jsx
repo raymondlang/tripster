@@ -40,7 +40,6 @@ const CreateFoodItineraryItem = ({ tripId }) => {
       setAddress("");
       setDescription("");
       setErrors({});
-      navigate("/ ");
     });
   };
 

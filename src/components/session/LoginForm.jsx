@@ -35,7 +35,6 @@ const LoginForm = () => {
 
     dispatch(login(user))
       .then((res) => {
-        console.log(res);
         handleLoginSuccess();
       })
       .catch((error) => {

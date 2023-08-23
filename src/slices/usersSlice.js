@@ -48,7 +48,6 @@ const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUsersForTrip.fulfilled, (state, action) => {
-        console.log(action.payload);
         const uniqueUsers = new Set(action.payload.map((user) => user._id));
         // Convert the Set back to an array of users
         state.users = Array.from(uniqueUsers).map((userId) =>

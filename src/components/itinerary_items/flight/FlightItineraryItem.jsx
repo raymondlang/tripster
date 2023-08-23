@@ -7,11 +7,11 @@ import { selectTripById } from "../../../slices/tripSlice";
 const FlightItineraryItem = ({
   deleteFlightItem,
   tripId,
-  // flightItineraryItems,
+  flightItineraryItems,
 }) => {
-  const flightItineraryItems = useSelector((state) =>
-    Object.values(state.trip.trip[tripId].flightItineraryItems)
-  );
+  // const flightItineraryItems = useSelector((state) =>
+  //   Object.values(state.trip.trip[tripId].flightItineraryItems)
+  // );
 
   const itemsList = flightItineraryItems.map((item, idx) => (
     <FlightItineraryItemDetails
