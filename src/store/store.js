@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import commentsReducer from "@/slices/commentSlice.js";
 import sessionReducer from "@/slices/sessionSlice.js";
-// import errors from "@/slices/
 import tripReducer from "@/slices/tripSlice.js";
 import itineraryItemReducer from "@/slices/intineraryItemSlice.js";
 import flightItineraryItemReducer from "@/slices/flightItineraryItemSlice.js";
