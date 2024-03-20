@@ -2,9 +2,7 @@
 
 [Tripster](https://tripster-client.vercel.app/) is a single-page application designed to help travelers plan their voyages with more ease and organization. Born to solve the age-old problem of hassling over messy Google docs to plan itineraries for group trips. The original inspiration was to create an application that combines an interactive messenger alongside a running itinerary list that could store the key information from the group trip chat.
 
-<p align="center">
-  <img src="https://media.giphy.com/media/BQLmFoyv7Kr2pStjiH/giphy.gif" width="480" height="246" frameBorder="0" allowFullScreen>
-</p>
+![tripster overview](https://github.com/raymondlang/tripster/assets/16345938/93274783-1136-4cce-b2fe-afcee817c6c0)
 
 Tripster utilizes MongoDB and Express in the backend and React, Redux, and NodeJS in the frontend to achieve this, allowing users to utilize CRUD operations in both the comment and itinerary functionalities.
 
