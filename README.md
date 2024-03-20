@@ -76,9 +76,7 @@ Users can only access trips that they own or are apart of.
 
 Friends can be also introduced to a trip simply by adding their email associated with their account. Once added to a trip, a user has access to the trip and all associated information on their dashboards. Users can only join if they aren't already part of the trip.
 
-<p align="center">
-  <img src="https://media.giphy.com/media/ZHaC8x44eDIOqezFVc/giphy.gif" width="480" height="246" frameBorder="0" allowFullScreen>
-</p>
+![tripster friend invite](https://github.com/raymondlang/tripster/assets/16345938/be106c57-aa65-4061-a234-2d1f06ef0ebc)
 
 ## Creating comments
 
