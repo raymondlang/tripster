@@ -91,6 +91,8 @@ Friends can be also introduced to a trip simply by adding their email associated
 Each trip has a private page where users who've been invited can chat with each other. Comments populate in the feed without having to refresh the page and of course, you can use your favorite emojis. Comments can only be deleted by their respective owner.
 
 ![tripster comments](https://github.com/raymondlang/tripster/assets/16345938/50224f76-46e9-42be-a752-3d093a6fe7d8)
+![tripster comments updated](https://github.com/raymondlang/tripster/assets/16345938/b5b679b1-c5cf-4893-b97a-38afca2a9beb)
+
 
 ## Itinerary items
 
