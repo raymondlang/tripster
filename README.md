@@ -90,9 +90,8 @@ Each trip has a private page where users who've been invited can chat with each 
 
 All users on a trip can also add itinerary items with specific address, description, category, and name details. Itinerary items can also be deleted without refreshing the page.
 
-<p align="center">
-  <img src="https://media.giphy.com/media/aFKOGKWHlAkYOELmtl/giphy.gif" width="300" height="480" frameBorder="0" allowFullScreen>
-</p>
+![tripster add itinerary](https://github.com/raymondlang/tripster/assets/16345938/b068c412-150b-4cd9-b095-33413d862930)
+
 
 # Future features
 
