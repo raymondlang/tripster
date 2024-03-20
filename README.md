@@ -23,9 +23,7 @@ Tripster utilizes MongoDB and Express in the backend and React, Redux, and NodeJ
 
 Users can sign up for a new account, login to an existing account, or access a demo user to access the site features. The session token for the current user persists until the user explicitly logs out, allowing users to close out of tabs with ease.
 
-<p align="center">
-  <img src="https://media.giphy.com/media/XxfV6B8SKW8E5trcaq/giphy.gif" width="480" height="246" frameBorder="0" allowFullScreen>
-</p>
+![tripster login](https://github.com/raymondlang/tripster/assets/16345938/75293e78-73a0-479a-98e6-9f76bbbe7b4f)
 
 If the user enters invalid information, either in the signup form or the login form, specific error messages appear to highlight which input fields would need corrections.
 Upon a successful login, the user lands on the user dashboard where a trip can be created, edited or deleted.
